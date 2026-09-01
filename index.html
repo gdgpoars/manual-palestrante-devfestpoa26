@@ -295,7 +295,7 @@
 <div class="scrim" id="scrim"></div>
 
 <div class="shell">
-  <nav class="sidenav" id="sidenav" aria-label="Navegação do manual">
+  <nav class="sidenav" id="sidenav" aria-label="Navegação do manual" style="display:none;">
     <a href="#topo" class="brand">
       <span class="mark">🧙</span>
       <span class="word">Manual da Pessoa Palestrante<small>DevFest Porto Alegre 2026</small></span>
@@ -346,7 +346,7 @@
       <div class="wrap">
         <div class="hero-kicker"><span class="dot"></span> GDG Porto Alegre &amp; GDG Caxias do Sul apresentam</div>
         <h1 id="heroTitle">🧙 Manual da Pessoa Palestrante</h1>
-        <p class="lede" id="heroLede">Tudo o que você precisa saber para chegar ao DevFest Porto Alegre 2026 preparada, tranquila e pronta para compartilhar conhecimento.</p>
+        <p class="lede" id="heroLede">Este manual é exclusivo para quem foi selecionada(o) para palestrar no DevFest Porto Alegre 2026. Entre com o e-mail que você usou na inscrição para acessar.</p>
         <div class="hero-meta">
           <div><strong>📅 31/10/2026</strong>Sábado</div>
           <div><strong>📍 Faculdade Dom Bosco</strong>Porto Alegre/RS</div>
@@ -354,7 +354,7 @@
         </div>
 
         <div class="login-box" id="loginBox">
-          <div class="login-label">🔑 Entre com o e-mail da sua inscrição para ver seus dados</div>
+          <div class="login-label">🔑 Acesso exclusivo — digite o e-mail da sua inscrição</div>
           <div class="login-row">
             <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="email">
             <button class="btn btn-primary btn-small" id="loginBtn" type="button">Entrar</button>
@@ -367,13 +367,14 @@
           <button class="btn btn-ghost btn-small" id="logoutBtn" type="button">Trocar e-mail</button>
         </div>
 
-        <div class="cta-row">
+        <div class="cta-row" id="ctaRow" style="display:none;">
           <a href="#comece-aqui" class="btn btn-primary">Começar o manual</a>
           <a href="#sua-participacao" class="btn btn-ghost">Ver minha programação</a>
         </div>
       </div>
     </section>
 
+    <div id="gatedContent" style="display:none;">
     <!-- COMECE AQUI -->
     <section id="comece-aqui">
       <div class="wrap">
@@ -935,6 +936,8 @@
       </div>
     </section>
 
+    </div><!-- /gatedContent -->
+
   </main>
 </div>
 
@@ -1071,6 +1074,24 @@
   const bigTimeLabel = document.getElementById('bigTimeLabel');
   const clockAlert = document.getElementById('clockAlert');
   const clockEnd = document.getElementById('clockEnd');
+  const sidenavEl = document.getElementById('sidenav');
+  const gatedContentEl = document.getElementById('gatedContent');
+  const ctaRowEl = document.getElementById('ctaRow');
+  const HERO_TITLE_DEFAULT = '🧙 Manual da Pessoa Palestrante';
+  const HERO_LEDE_DEFAULT = 'Este manual é exclusivo para quem foi selecionada(o) para palestrar no DevFest Porto Alegre 2026. Entre com o e-mail que você usou na inscrição para acessar.';
+  const STORAGE_KEY = 'devfestpoa26_manual_auth';
+
+  // localStorage com fallback: se falhar (ex: dentro de um preview sandboxed),
+  // o login simplesmente não persiste entre recarregamentos, mas continua funcionando na sessão atual.
+  function safeStorageGet(key){
+    try { return window.localStorage.getItem(key); } catch(e){ return null; }
+  }
+  function safeStorageSet(key, val){
+    try { window.localStorage.setItem(key, val); } catch(e){ /* silencioso */ }
+  }
+  function safeStorageRemove(key){
+    try { window.localStorage.removeItem(key); } catch(e){ /* silencioso */ }
+  }
 
   function renderTalkBlock(talk){
     return '<div class="panel-rows" data-talk-block style="margin-top:14px;">' +
@@ -1083,7 +1104,21 @@
     '</div>';
   }
 
-  function applySpeaker(data){
+  function revealManual(){
+    sidenavEl.style.display = 'block';
+    gatedContentEl.style.display = 'block';
+    ctaRowEl.style.display = 'flex';
+    document.getElementById('menuToggle').style.display = '';
+  }
+
+  function lockManual(){
+    sidenavEl.style.display = 'none';
+    gatedContentEl.style.display = 'none';
+    ctaRowEl.style.display = 'none';
+    document.getElementById('menuToggle').style.display = 'none';
+  }
+
+  function applySpeaker(data, hash){
     // hero greeting
     heroTitle.textContent = '👋 Olá, ' + data.primeiroNome + '!';
     heroLede.textContent = 'Esse é o seu manual da pessoa palestrante do DevFest Porto Alegre 2026.';
@@ -1092,6 +1127,9 @@
     loginBox.style.display = 'none';
     loggedBox.style.display = 'flex';
     loggedAs.textContent = '🟢 Logada(o) como ' + data.nomeCompleto;
+
+    // desbloqueia o manual inteiro
+    revealManual();
 
     // panel
     panelHint.textContent = data.talks.length > 1 ? 'Você tem ' + data.talks.length + ' atividades na grade' : 'Dados carregados da grade oficial';
@@ -1111,6 +1149,9 @@
     // coupon auto-preenchido e já gerado
     couponName.value = data.primeiroNome;
     couponGenBtn.click();
+
+    // guarda o login (só o hash, nunca o e-mail em texto puro) para a próxima visita
+    if(hash) safeStorageSet(STORAGE_KEY, hash);
   }
 
   function doLogin(){
@@ -1120,9 +1161,9 @@
     const data = SPEAKERS[h];
     if(data){
       loginMsg.textContent = '';
-      applySpeaker(data);
+      applySpeaker(data, h);
     } else {
-      loginMsg.textContent = 'Não encontramos esse e-mail na grade. Confira se digitou certo ou fale com a organização.';
+      loginMsg.textContent = 'Não encontramos esse e-mail na grade de palestrantes selecionadas(os). Confira se digitou certo ou fale com a organização.';
       loginMsg.className = 'login-msg error';
     }
   }
@@ -1133,8 +1174,8 @@
     loggedBox.style.display = 'none';
     loginBox.style.display = 'block';
     loginEmail.value = '';
-    heroTitle.textContent = '🧙 Manual da Pessoa Palestrante';
-    heroLede.textContent = 'Tudo o que você precisa saber para chegar ao DevFest Porto Alegre 2026 preparada, tranquila e pronta para compartilhar conhecimento.';
+    heroTitle.textContent = HERO_TITLE_DEFAULT;
+    heroLede.textContent = HERO_LEDE_DEFAULT;
     panelHint.textContent = 'Faça login lá em cima para ver seus dados aqui';
     panelHint.classList.add('pending');
     panelHint.classList.remove('ok');
@@ -1150,7 +1191,19 @@
     bigTimeLabel.textContent = 'faça login para ver sua duração';
     clockAlert.textContent = '--:--';
     clockEnd.textContent = '--:--';
+    safeStorageRemove(STORAGE_KEY);
+    lockManual();
+    window.scrollTo({top:0, behavior:'instant'});
   });
+
+  // trava o manual por padrão e tenta um login automático se já houver um acesso salvo neste navegador
+  lockManual();
+  (function tryAutoLogin(){
+    const savedHash = safeStorageGet(STORAGE_KEY);
+    if(savedHash && SPEAKERS[savedHash]){
+      applySpeaker(SPEAKERS[savedHash], savedHash);
+    }
+  })();
 </script>
 
 </body>
