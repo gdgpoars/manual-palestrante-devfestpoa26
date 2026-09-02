@@ -167,6 +167,7 @@
     border-radius:10px; padding:11px 14px; color:var(--ink); font-family:'Inter'; font-size:14px;
   }
   .admin-table{width:100%; border-collapse:collapse; margin-top:20px; font-size:14px;}
+  #adminTableWrap{overflow-x:auto;}
   .admin-table th{
     text-align:left; padding:10px 12px; color:var(--ink-faint); font-size:12px;
     text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--line-strong);
@@ -174,6 +175,36 @@
   .admin-table td{padding:12px; border-bottom:1px solid var(--line); vertical-align:middle;}
   .admin-bar-track{width:120px; height:8px; border-radius:999px; background:var(--bg-raised-2); overflow:hidden; display:inline-block; vertical-align:middle; margin-right:8px;}
   .admin-bar-fill{height:100%; background:linear-gradient(90deg,var(--pumpkin),var(--violet));}
+
+  .journey-indicator{
+    position:relative; z-index:1; margin-top:44px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:18px;
+  }
+  .journey-text{
+    max-width:52ch; margin:0 auto; text-align:center; font-size:14.5px;
+    color:var(--ink-muted);
+  }
+  .journey-text strong{color:var(--pumpkin);}
+  .scroll-arrow{
+    position:relative; display:inline-flex; align-items:center; justify-content:center;
+    width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line-strong);
+    color:var(--pumpkin); text-decoration:none;
+    animation:bounce-arrow 1.8s ease-in-out infinite;
+  }
+  .scroll-arrow:hover{border-color:var(--pumpkin); background:rgba(255,122,60,.08);}
+  .scroll-arrow::after{
+    content:attr(data-tooltip);
+    position:absolute; bottom:-38px; left:50%; transform:translateX(-50%);
+    white-space:nowrap; font-size:12.5px; font-family:'Inter'; font-weight:500;
+    color:var(--ink); background:var(--bg-raised-2); border:1px solid var(--line-strong);
+    padding:6px 12px; border-radius:8px; opacity:0; pointer-events:none;
+    transition:opacity .15s ease;
+  }
+  .scroll-arrow:hover::after, .scroll-arrow:focus-visible::after{ opacity:1; }
+  @keyframes bounce-arrow{
+    0%, 100% { transform:translateY(0); }
+    50% { transform:translateY(8px); }
+  }
 
   /* generic components */
   .grid{display:grid; gap:20px;}
@@ -322,7 +353,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
   import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
   const firebaseConfig = {
@@ -353,6 +384,23 @@
         const snap = await getDoc(doc(db, 'progress', hash));
         return snap.exists() ? snap.data() : null;
       } catch(e){ console.warn('Falha ao carregar progresso:', e); return null; }
+    },
+    async recordLogin(hash){
+      try {
+        const ref = doc(db, 'progress', hash);
+        const snap = await getDoc(ref);
+        const payload = { lastLogin: serverTimestamp() };
+        if(!snap.exists() || !snap.data().firstLogin){
+          payload.firstLogin = serverTimestamp();
+        }
+        await setDoc(ref, payload, { merge: true });
+      } catch(e){ console.warn('Falha ao registrar login:', e); }
+    },
+    async addSessionTime(hash, seconds){
+      if(!seconds || seconds <= 0) return;
+      try {
+        await setDoc(doc(db, 'progress', hash), { totalSeconds: increment(seconds) }, { merge: true });
+      } catch(e){ console.warn('Falha ao registrar tempo de sessão:', e); }
     },
     async adminSignIn(email, password){
       await signInWithEmailAndPassword(auth, email, password);
@@ -465,6 +513,13 @@
           <a href="#comece-aqui" class="btn btn-primary">Começar o manual</a>
           <a href="#sua-participacao" class="btn btn-ghost">Ver minha programação</a>
         </div>
+      </div>
+
+      <div class="journey-indicator" id="journeyIndicator" style="display:none;">
+        <p class="journey-text">Esse manual é importante — a ideia é que você leia <strong>100%</strong> dele. Conforme for percorrendo o conteúdo, seu progresso (lá em cima ↑) vai aumentando, e quando chegar a 100% vamos saber que você está <strong>101% preparada(o)</strong> para o grande dia! 🎉🧙</p>
+        <a href="#comece-aqui" class="scroll-arrow" data-tooltip="Role para baixo para começar a sua jornada" aria-label="Role para baixo para começar a sua jornada">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
       </div>
     </section>
 
@@ -1397,10 +1452,42 @@
     scheduleSave();
   }
 
+  // --- rastreamento de tempo de sessão (heartbeat) ---
+  let sessionHeartbeat = null;
+  let sessionUnflushedSeconds = 0;
+  const HEARTBEAT_SECONDS = 20;
+
+  function flushSessionTime(){
+    if(!currentHash || sessionUnflushedSeconds <= 0) return;
+    const toSend = sessionUnflushedSeconds;
+    sessionUnflushedSeconds = 0;
+    whenFirebaseReady(() => window.__fb.addSessionTime(currentHash, toSend));
+  }
+
+  function startSessionHeartbeat(){
+    stopSessionHeartbeat();
+    sessionHeartbeat = setInterval(() => {
+      if(document.visibilityState === 'visible' && currentHash){
+        sessionUnflushedSeconds += HEARTBEAT_SECONDS;
+        flushSessionTime();
+      }
+    }, HEARTBEAT_SECONDS * 1000);
+    window.addEventListener('beforeunload', flushSessionTime);
+    document.addEventListener('visibilitychange', () => {
+      if(document.visibilityState === 'hidden') flushSessionTime();
+    });
+  }
+
+  function stopSessionHeartbeat(){
+    if(sessionHeartbeat){ clearInterval(sessionHeartbeat); sessionHeartbeat = null; }
+    flushSessionTime();
+  }
+
   function startReadTracking(hash, previousSections){
     currentHash = hash;
     sectionsRead = previousSections && typeof previousSections === 'object' ? {...previousSections} : {};
     updateMyProgressUI();
+    startSessionHeartbeat();
 
     if(readObserver) readObserver.disconnect();
     const timers = {};
@@ -1430,6 +1517,7 @@
 
   function stopReadTracking(){
     if(readObserver){ readObserver.disconnect(); readObserver = null; }
+    stopSessionHeartbeat();
     currentHash = null;
     sectionsRead = {};
     const track = document.getElementById('readingProgressTrack');
@@ -1467,6 +1555,8 @@
     gatedContentEl.style.display = 'block';
     ctaRowEl.style.display = 'flex';
     document.getElementById('menuToggle').style.display = '';
+    const journey = document.getElementById('journeyIndicator');
+    if(journey) journey.style.display = 'flex';
   }
 
   function lockManual(){
@@ -1474,6 +1564,8 @@
     gatedContentEl.style.display = 'none';
     ctaRowEl.style.display = 'none';
     document.getElementById('menuToggle').style.display = 'none';
+    const journey = document.getElementById('journeyIndicator');
+    if(journey) journey.style.display = 'none';
   }
 
   function applySpeaker(data, hash){
@@ -1513,6 +1605,7 @@
 
     // carrega progresso salvo (se existir) e começa a rastrear a leitura
     whenFirebaseReady(() => {
+      window.__fb.recordLogin(hash);
       window.__fb.loadProgress(hash).then(saved => {
         startReadTracking(hash, saved && saved.sections);
       });
@@ -1609,6 +1702,23 @@
   const adminRefreshBtn = document.getElementById('adminRefreshBtn');
   const adminTableWrap = document.getElementById('adminTableWrap');
 
+  function fmtFirestoreDate(ts){
+    if(!ts) return '—';
+    try {
+      const d = typeof ts.toDate === 'function' ? ts.toDate() : new Date(ts);
+      return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    } catch(e){ return '—'; }
+  }
+
+  function fmtSessionTime(totalSeconds){
+    if(!totalSeconds) return '—';
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.round((totalSeconds % 3600) / 60);
+    if(h > 0) return h + 'h ' + m + 'min';
+    if(m > 0) return m + 'min';
+    return '<1min';
+  }
+
   function renderAdminTable(rows){
     if(!rows.length){
       adminTableWrap.innerHTML = '<p style="font-size:13.5px;">Ainda ninguém acessou o manual.</p>';
@@ -1622,15 +1732,23 @@
       const done = SECTION_IDS.filter(id => sections[id]).length;
       const pct = Math.round((done / SECTION_IDS.length) * 100);
       const pendentes = SECTION_IDS.filter(id => !sections[id]).map(id => SECTION_LABELS[id] || id);
-      return { nome, pct, done, total: SECTION_IDS.length, pendentes };
+      return {
+        nome, pct, done, total: SECTION_IDS.length, pendentes,
+        firstLogin: fmtFirestoreDate(r.firstLogin),
+        lastLogin: fmtFirestoreDate(r.lastLogin),
+        sessionTime: fmtSessionTime(r.totalSeconds)
+      };
     }).sort((a,b) => b.pct - a.pct);
 
-    let html = '<table class="admin-table"><thead><tr><th>Nome</th><th>Progresso</th><th>Seções pendentes</th></tr></thead><tbody>';
+    let html = '<table class="admin-table"><thead><tr><th>Nome</th><th>Progresso</th><th>1º login</th><th>Último login</th><th>Tempo de sessão</th><th>Seções pendentes</th></tr></thead><tbody>';
     enriched.forEach(r => {
       html += '<tr>' +
         '<td>' + r.nome + '</td>' +
         '<td><span class="admin-bar-track"><span class="admin-bar-fill" style="width:' + r.pct + '%"></span></span>' + r.pct + '% (' + r.done + '/' + r.total + ')</td>' +
-        '<td style="font-size:12.5px; color:var(--ink-faint); max-width:360px;">' + (r.pendentes.length ? r.pendentes.join(', ') : '— tudo lido 🎉') + '</td>' +
+        '<td style="font-size:12.5px; white-space:nowrap;">' + r.firstLogin + '</td>' +
+        '<td style="font-size:12.5px; white-space:nowrap;">' + r.lastLogin + '</td>' +
+        '<td style="font-size:12.5px; white-space:nowrap;">' + r.sessionTime + '</td>' +
+        '<td style="font-size:12.5px; color:var(--ink-faint); max-width:300px;">' + (r.pendentes.length ? r.pendentes.join(', ') : '— tudo lido 🎉') + '</td>' +
       '</tr>';
     });
     html += '</tbody></table>';
