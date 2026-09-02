@@ -28,13 +28,14 @@
     --radius-s:10px;
     --radius-m:16px;
     --radius-l:26px;
-    --maxw:1120px;
+    --maxw:1480px;
     --nav-w:272px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
+    width:100%;
     background:var(--bg);
     color:var(--ink);
     font-family:'Inter',system-ui,sans-serif;
@@ -60,7 +61,7 @@
   code{font-family:ui-monospace,'SF Mono',Menlo,monospace; background:var(--bg-raised-2); padding:.15em .45em; border-radius:6px; font-size:.9em; color:var(--pumpkin);}
 
   /* layout shell */
-  .shell{display:flex; min-height:100vh;}
+  .shell{display:flex; min-height:100vh; width:100%;}
   .sidenav{
     width:var(--nav-w); flex-shrink:0;
     position:sticky; top:0; height:100vh; overflow-y:auto;
@@ -85,7 +86,7 @@
   .navlink .em{font-size:15px;}
 
   .menu-toggle{display:none;}
-  main{flex:1; min-width:0;}
+  main{flex:1; min-width:0; width:100%;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
   section{padding:88px 0; border-bottom:1px solid var(--line);}
   section:last-of-type{border-bottom:none;}
@@ -315,6 +316,8 @@
     <div class="navgroup-label">Branding &amp; divulgação</div>
     <a class="navlink" href="#branding"><span class="em">🎨</span> Branding oficial</a>
     <a class="navlink" href="#divulgacao"><span class="em">📣</span> Material de divulgação</a>
+    <a class="navlink" href="#boas-praticas"><span class="em">👀</span> Boas práticas visuais</a>
+    <a class="navlink" href="#empresa"><span class="em">🏢</span> Divulgar minha empresa?</a>
 
     <div class="navgroup-label">Benefícios</div>
     <a class="navlink" href="#beneficios"><span class="em">💜</span> O que você recebe</a>
@@ -380,9 +383,34 @@
       <div class="wrap">
         <div class="section-head">
           <div class="eyebrow">👋 Comece aqui</div>
-          <h2>O que significa ser pessoa palestrante no DevFestPoa26</h2>
+          <h2>🧭 Primeiros passos: como usar este manual</h2>
         </div>
-        <p style="max-width:68ch;">Ser uma pessoa palestrante no DevFest Porto Alegre 2026 é muito mais do que subir ao palco por 30 minutos. Você foi convidada para compartilhar conhecimento, experiências e perspectivas com uma comunidade diversa de pessoas que estão aprendendo, criando, trabalhando e construindo suas carreiras em tecnologia.</p>
+
+        <div class="callout violet" style="margin-top:0;">
+          <p>👈 <strong>Todos os tópicos importantes estão no menu à esquerda</strong> (no celular, toque no botão <strong>☰ Menu</strong> no canto superior). É por ali que você navega entre prazos, benefícios, mapa do evento, plano B, FAQ e tudo mais — sem precisar rolar a página inteira procurando informação.</p>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>📖 Este é o manual do manual</h3>
+            <p>Sim, é meio "manual dentro do manual" mesmo 😅 — mas é importante: reserve alguns minutos para navegar por todos os tópicos do menu pelo menos uma vez antes do evento. É a forma mais rápida de garantir que você não vai ficar com nenhuma dúvida na hora H.</p>
+          </div>
+          <div class="card">
+            <h3>🗺️ Por onde eu começo?</h3>
+            <ul>
+              <li><strong>Sua participação</strong> — veja sua palestra, trilha, horário e duração</li>
+              <li><strong>Prepare sua palestra</strong> — prazos, checklist e boas práticas de slide</li>
+              <li><strong>No dia do evento</strong> — chegada, mapa e credenciamento</li>
+              <li><strong>FAQ</strong> — respostas rápidas para as dúvidas mais comuns</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-head" style="margin-top:56px;">
+          <div class="eyebrow">🧙 O que significa ser pessoa palestrante</div>
+          <h2>Muito mais do que subir ao palco</h2>
+        </div>
+        <p style="max-width:68ch;">Ser uma pessoa palestrante no DevFest Porto Alegre 2026 é muito mais do que subir ao palco por alguns minutos. Você foi convidada para compartilhar conhecimento, experiências e perspectivas com uma comunidade diversa de pessoas que estão aprendendo, criando, trabalhando e construindo suas carreiras em tecnologia.</p>
         <p style="max-width:68ch;">No DevFest, acreditamos que conhecimento não precisa estar restrito a quem já sabe muito. Uma boa palestra pode ensinar uma nova tecnologia, provocar uma reflexão, apresentar um caminho diferente para resolver um problema ou simplesmente fazer alguém sair do evento com vontade de experimentar algo novo.</p>
 
         <div class="quote-big">Você não está aqui apenas para falar. Está aqui para fazer parte da experiência.</div>
@@ -523,7 +551,7 @@
           <div class="eyebrow">⌨️ Live coding</div>
           <h2>Live coding é bem-vindo — com plano alternativo</h2>
         </div>
-        <p>Adoramos ver código sendo escrito ao vivo, mas 30 minutos é pouco tempo para depender 100% de uma demo que pode falhar. Tenha sempre uma versão gravada ou um estado salvo do projeto para seguir em frente sem perder tempo.</p>
+        <p>Adoramos ver código sendo escrito ao vivo, mas o tempo da sua atividade costuma ser curto para depender 100% de uma demo que pode falhar. Tenha sempre uma versão gravada ou um estado salvo do projeto para seguir em frente sem perder tempo.</p>
         <div class="card">
           <h3>✅ Checklist de live coding</h3>
           <ul class="checklist" data-checklist>
@@ -563,7 +591,10 @@
         </div>
         <p>O branding oficial dos DevFests é uma ótima opção para manter sua apresentação alinhada à identidade global do evento — cores, tipografia e componentes já pensados para slides técnicos.</p>
         <a href="https://docs.google.com/presentation/d/1xspdc9b3AoVDQqietzwBllW4agG7rmg5bhH059NEbPU/edit?slide=id.g3ea767132af_0_0" target="_blank" rel="noopener" class="btn btn-primary" style="margin:8px 0 20px;">Acessar branding oficial ↗</a>
-        <p>Mas o DevFest Porto Alegre 2026 também tem uma identidade própria, inspirada em Halloween — e como as nossas trilhas seguem essa mesma vibe 🎃, também é super válido (e divertido) usar elementos do tema nos seus slides:</p>
+        <div class="callout violet">
+          <p>Estamos disponibilizando o branding oficial dos DevFests do mundo mesmo sabendo que o branding do DevFest Porto Alegre deste ano é diferenciado — a real é que ainda não temos braços (nem tempo 😅) para montar um branding tão bem estruturado quanto esse que estamos divulgando. Por isso, caso queira, pode usar a <a href="https://drive.google.com/drive/folders/1fDXWr2K5m4zKtmYKEznR1G9xbHGDW-dW" target="_blank" rel="noopener">pasta de materiais de divulgação</a> e se inspirar no tema Halloween da nossa edição 🎃</p>
+        </div>
+        <p>E como as nossas trilhas seguem essa mesma vibe 🎃, também é super válido (e divertido) usar elementos do tema nos seus slides:</p>
         <div class="grid grid-3">
           <div class="card"><h3>🎨 Cores</h3><p>Tons de laranja abóbora e roxo, como no visual do evento.</p></div>
           <div class="card"><h3>🕸️ Elementos visuais</h3><p>Teias, morcegos, abóboras e outros ícones de Halloween como apoio, não como poluição visual.</p></div>
@@ -591,6 +622,109 @@
       </div>
     </section>
 
+    <!-- BOAS PRÁTICAS VISUAIS -->
+    <section id="boas-praticas">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">👀 Prepare sua palestra</div>
+          <h2>Boas práticas visuais na apresentação</h2>
+          <p>Sua apresentação não precisa ser uma obra-prima de design. Ela precisa ser fácil de acompanhar.</p>
+        </div>
+        <p style="max-width:70ch;">Durante uma palestra, o público precisa conseguir ouvir você, entender o que está na tela e acompanhar seu raciocínio — tudo ao mesmo tempo. Algumas dicas simples ajudam bastante:</p>
+
+        <div class="grid grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>✂️ Menos texto, mais clareza</h3>
+            <p>Evite transformar o slide em um documento. Se você precisa de vários parágrafos para explicar uma ideia, provavelmente vale dividir em mais de um slide. O slide apoia sua fala. Ele não precisa substituir você.</p>
+          </div>
+          <div class="card">
+            <h3>🎯 Uma ideia por vez</h3>
+            <p>Sempre que possível, trabalhe uma ideia principal por slide. Pergunte: "se a pessoa lembrar de apenas uma coisa deste slide, o que eu quero que seja?" Se a resposta for "várias coisas", talvez seja hora de dividir. 👀</p>
+          </div>
+          <div class="card">
+            <h3>🔠 Texto grande e legível</h3>
+            <p>Lembre que seu slide pode estar sendo visto do fundo de uma sala. Prefira títulos grandes, textos curtos, fontes fáceis de ler, bom espaçamento e contraste suficiente. Se você precisa dar zoom para ler seu próprio slide, provavelmente o público também precisará. 😅</p>
+          </div>
+          <div class="card">
+            <h3>🎨 Elementos visuais com propósito</h3>
+            <p>Imagens, gráficos, diagramas, ilustrações e animações podem ajudar a explicar uma ideia. Mas não precisam estar em todos os slides. Decoração não deve competir com informação.</p>
+          </div>
+          <div class="card">
+            <h3>📊 Gráficos simples</h3>
+            <p>Se você precisa de 30 segundos para explicar como interpretar um gráfico, simplifique. Destaque o dado ou conclusão mais importante e deixe o restante em segundo plano.</p>
+          </div>
+          <div class="card">
+            <h3>💻 Código também precisa respirar</h3>
+            <p>Para apresentações técnicas: evite mostrar arquivos inteiros, destaque apenas o trecho importante, aumente o tamanho da fonte, use exemplos pequenos e explique o que a pessoa deve observar. Não faça o público procurar o código importante em 40 linhas.</p>
+          </div>
+          <div class="card">
+            <h3>🌈 Cuidado com as cores</h3>
+            <p>Use cores para criar hierarquia e destacar informações, não para colorir tudo. E lembre: não use apenas cor para transmitir uma informação importante — isso também ajuda pessoas com diferentes condições de visão.</p>
+          </div>
+          <div class="card">
+            <h3>🎃 E o Halloween?</h3>
+            <p>Você pode brincar com a identidade do DevFest Porto Alegre 2026! Uma aranha aqui, um easter egg ali, elementos das trilhas, referências visuais... Mas lembre: Halloween é o tempero. O conteúdo continua sendo o prato principal. 🧙‍♀️</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:28px;">
+          <h3>✅ Checklist rápido</h3>
+          <p style="margin-bottom:12px;">Antes de enviar seus slides, pergunte:</p>
+          <ul>
+            <li>Consigo entender a ideia principal de cada slide rapidamente?</li>
+            <li>O texto pode ser reduzido?</li>
+            <li>A fonte está grande o suficiente?</li>
+            <li>Existe contraste suficiente?</li>
+            <li>Os elementos visuais ajudam a explicar?</li>
+            <li>Meus gráficos são fáceis de entender?</li>
+            <li>Meu código está legível?</li>
+            <li>Os slides funcionam mesmo sem animações?</li>
+            <li>Não estou tentando colocar tudo em um único slide?</li>
+          </ul>
+          <p style="margin-bottom:0;">Se a resposta for sim para a maioria: ótimo. Agora deixe os slides descansarem e vá preparar sua fala. 🎤</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIVULGAÇÃO DE EMPRESA -->
+    <section id="empresa">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🏢 Durante a palestra</div>
+          <h2>Posso divulgar minha empresa durante a palestra?</h2>
+        </div>
+        <p>Pode falar sobre onde você trabalha, sua experiência profissional ou projetos dos quais participa, claro! 💜</p>
+        <p>O que pedimos é que a palestra não seja utilizada como espaço de publicidade, venda ou promoção comercial da sua empresa, produto ou serviço. O DevFest possui patrocinadores e parceiros que apoiam financeiramente a realização do evento e possuem espaços e contrapartidas específicas para divulgação. Por isso, precisamos preservar esses espaços e garantir uma experiência justa para quem investe no evento.</p>
+
+        <div class="grid grid-2" style="margin-top:20px;">
+          <div class="card">
+            <h3>🚫 Evite durante sua apresentação</h3>
+            <ul>
+              <li>Chamadas para compra de produtos ou serviços</li>
+              <li>Divulgação comercial da empresa</li>
+              <li>Ofertas, promoções ou cupons comerciais</li>
+              <li>Apresentações institucionais sem relação com o conteúdo</li>
+              <li>Transformar parte da palestra em um pitch de vendas</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>✅ O que pode</h3>
+            <p style="margin-bottom:10px;">Se fizer sentido para o conteúdo, você pode mencionar:</p>
+            <ul>
+              <li>Sua empresa</li>
+              <li>Seu cargo</li>
+              <li>Projetos em que trabalhou</li>
+              <li>Cases profissionais</li>
+              <li>Ferramentas ou tecnologias utilizadas no trabalho</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quote-big" style="font-size:clamp(18px,2.2vw,24px); max-width:34ch;">Sua experiência pode fazer parte da história. A palestra não pode virar um comercial. 😅</div>
+        <p>Se você tiver alguma dúvida sobre uma divulgação específica que gostaria de fazer, fale com a organização antes do evento.</p>
+      </div>
+    </section>
+
     <!-- BENEFÍCIOS -->
     <section id="beneficios">
       <div class="wrap">
@@ -604,7 +738,16 @@
           <div class="card"><h3>🎫 Ingresso acompanhante</h3><p>Um ingresso cortesia para levar alguém especial. Veja os detalhes abaixo.</p></div>
           <div class="card"><h3>🏷️ Cupom exclusivo</h3><p>Um cupom com seu nome para compartilhar com sua comunidade.</p></div>
           <div class="card"><h3>📸 Registros do evento</h3><p>Fotos e vídeos feitos pelo time de mídia voluntário, incluindo alguns takes da sua palestra.</p></div>
-          <div class="card"><h3>📄 Certificado</h3><p><span class="badge pending">Em breve</span> — informação será atualizada pela organização.</p></div>
+          <div class="card"><h3>📄 Certificado diferenciado</h3><p>Considera também +10h de preparação. Veja os detalhes abaixo. 💜</p></div>
+        </div>
+
+        <div class="card" style="margin-top:24px;">
+          <h3>📄 Certificado</h3>
+          <p>Você não vai receber apenas um certificado de participação como pessoa palestrante. 💜</p>
+          <p>Preparamos um certificado diferenciado, considerando também <strong style="color:var(--ink);">+10 horas dedicadas</strong> à preparação e montagem da sua apresentação.</p>
+          <p>Afinal, sabemos que sua participação não começa quando você sobe ao palco. Antes dos minutos de conteúdo, existe todo o tempo dedicado a pesquisar, organizar ideias, preparar slides, testar aquela demo, revisar o conteúdo e deixar tudo pronto.</p>
+          <p>E, claro, esperamos que você esteja com a gente durante todo o evento — hein? 👀🎃</p>
+          <p style="margin-bottom:0;">Queremos reconhecer não apenas os minutos no palco, mas também todo o trabalho que existe por trás deles.</p>
         </div>
       </div>
     </section>
@@ -644,13 +787,13 @@
           <span class="badge">Pode compartilhar à vontade</span>
         </div>
         <div>
-          <p style="margin-top:20px; margin-bottom:0; font-size:14px;">Quer ver como fica o seu? Digite seu primeiro nome:</p>
-          <div class="coupon-input-row">
+          <div class="coupon-input-row" style="display:none;">
             <input type="text" id="couponName" placeholder="Seu primeiro nome" maxlength="20">
             <button class="btn btn-ghost btn-small" id="couponGenBtn" type="button">Gerar meu cupom</button>
-            <button class="btn btn-primary btn-small" id="couponCopyBtn" type="button" style="display:none;">Copiar meu cupom</button>
           </div>
+          <button class="btn btn-primary btn-small" id="couponCopyBtn" type="button" style="display:none; margin-top:16px;">Copiar meu cupom</button>
           <div id="couponResult" style="margin-top:14px; display:none;">
+            <div style="font-size:13px;color:var(--ink-faint);margin-bottom:6px;">Seu cupom</div>
             <div class="coupon-code" id="couponResultCode"></div>
           </div>
         </div>
@@ -709,7 +852,7 @@
         </div>
         <div class="card" style="margin-top:20px;">
           <h3>🥨 Sala de Staff</h3>
-          <p>Haverá uma Sala de Staff disponível durante o evento — e sim, teremos comidinhas gostosas por lá 💜</p>
+          <p>4º andar, sala 405. E sim, teremos comidinhas gostosas por lá 💜</p>
         </div>
         <div class="grid grid-2" style="margin-top:20px;">
           <div class="card">
@@ -797,9 +940,7 @@
           <h2>📜 Código de Conduta</h2>
         </div>
         <p>O DevFestPoa26 é um espaço de respeito, diversidade e segurança para todas as pessoas — palestrantes, participantes, voluntárias e patrocinadoras.</p>
-        <div class="callout warn">
-          <p><span class="badge pending">Em breve</span> o link oficial do Código de Conduta completo será disponibilizado aqui.</p>
-        </div>
+        <a href="https://www.devfestportoalegre.com.br/codigo-de-conduta" target="_blank" rel="noopener" class="btn btn-primary">Ler o Código de Conduta completo ↗</a>
       </div>
     </section>
 
@@ -812,13 +953,11 @@
           <p>Porque provavelmente alguma coisa vai dar 😂</p>
         </div>
         <div class="grid grid-3">
-          <div class="card"><h3>💻 Meu notebook não conecta</h3><p>Procure a pessoa responsável pela sala.</p></div>
-          <div class="card"><h3>📡 A internet caiu</h3><p>Use sua versão offline/backup.</p></div>
-          <div class="card"><h3>🎥 Meu vídeo não funciona</h3><p>Tenha uma versão alternativa preparada.</p></div>
+          <div class="card"><h3>🎥 Meu vídeo não funciona</h3><p>Tenha uma versão alternativa preparada e um backup local, caso a internet oscile.</p></div>
           <div class="card"><h3>🔥 Minha demo quebrou</h3><p>Não gaste todo o seu tempo tentando consertá-la. Vá para o plano B.</p></div>
           <div class="card"><h3>⏰ Estou atrasada</h3><p>Avise imediatamente a organização.</p></div>
           <div class="card"><h3>🤒 Não poderei comparecer</h3><p>Entre em contato imediatamente pelo e-mail oficial.</p></div>
-          <div class="card"><h3>📝 Preciso alterar minha palestra</h3><p>Formalize a solicitação por e-mail.</p></div>
+          <div class="card"><h3>📝 Preciso de uma alteração após o prazo do dia 05/10</h3><p>Formalize a solicitação por e-mail para gdgpoars@gmail.com (A/C Fernanda dos Santos) e vamos avaliar com você.</p></div>
         </div>
       </div>
     </section>
@@ -884,28 +1023,28 @@
           <h2>Perguntas frequentes</h2>
         </div>
         <div id="faqList">
-          <details class="faq"><summary>Posso alterar minha palestra?<span class="plus">+</span></summary><div class="faq-a">Sim, mas toda alteração precisa ser formalizada por e-mail para gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
-          <details class="faq"><summary>Posso alterar o título?<span class="plus">+</span></summary><div class="faq-a">Sim, formalize a solicitação por e-mail para que a organização possa atualizar a grade e os materiais de divulgação.</div></details>
+          <details class="faq"><summary>Posso alterar minha palestra?<span class="plus">+</span></summary><div class="faq-a">Você tem até o dia 05/10 para enviar sua palestra. Caso após isso ainda precise de uma alteração, formalize por e-mail para gdgpoars@gmail.com (A/C Fernanda dos Santos) e organizaremos.</div></details>
+          <details class="faq"><summary>Posso alterar o título?<span class="plus">+</span></summary><div class="faq-a">Como a grade oficial já está divulgada, o ideal é manter o título que foi enviado.</div></details>
           <details class="faq"><summary>Até quando posso enviar os slides?<span class="plus">+</span></summary><div class="faq-a">O prazo é 05/10/2026, enviando para gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
           <details class="faq"><summary>Posso usar Google Apresentações?<span class="plus">+</span></summary><div class="faq-a">Sim — é, inclusive, o formato preferencial para o envio da sua apresentação.</div></details>
-          <details class="faq"><summary>Posso usar meu próprio notebook?<span class="plus">+</span></summary><div class="faq-a"><span class="badge pending">Em breve</span> — informação será atualizada pela organização.</div></details>
-          <details class="faq"><summary>Haverá internet?<span class="plus">+</span></summary><div class="faq-a"><span class="badge pending">Em breve</span> — informação será atualizada pela organização.</div></details>
+          <details class="faq"><summary>Posso usar meu próprio notebook?<span class="plus">+</span></summary><div class="faq-a">Por motivos de melhor funcionamento da sala e do tempo entre atividades, o notebook será da organização, fixo em cada sala/trilha.</div></details>
+          <details class="faq"><summary>Haverá internet?<span class="plus">+</span></summary><div class="faq-a">A faculdade dispõe de internet. Mas recomendamos que tenha o seu 5G funcionando como backup.</div></details>
           <details class="faq"><summary>Posso fazer live coding?<span class="plus">+</span></summary><div class="faq-a">Sim, live coding é bem-vindo — desde que você tenha um plano B pronto caso algo não funcione ao vivo.</div></details>
           <details class="faq"><summary>Posso usar vídeos?<span class="plus">+</span></summary><div class="faq-a">Sim, desde que estejam testados com antecedência e enviados junto com a sua apresentação.</div></details>
           <details class="faq"><summary>Posso usar QR Code?<span class="plus">+</span></summary><div class="faq-a">Sim, só confira se está funcionando antes de enviar sua apresentação.</div></details>
-          <details class="faq"><summary>Posso distribuir materiais?<span class="plus">+</span></summary><div class="faq-a"><span class="badge pending">Em breve</span> — informação será atualizada pela organização.</div></details>
-          <details class="faq"><summary>Posso divulgar minha empresa?<span class="plus">+</span></summary><div class="faq-a"><span class="badge pending">Em breve</span> — informação será atualizada pela organização.</div></details>
+          <details class="faq"><summary>Posso distribuir materiais?<span class="plus">+</span></summary><div class="faq-a">Consulte a viabilidade pelo e-mail gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
+          <details class="faq"><summary>Posso divulgar minha empresa?<span class="plus">+</span></summary><div class="faq-a">Pode, com moderação — a palestra não pode virar espaço de publicidade ou pitch de vendas. Veja o tópico completo em <a href="#empresa">Divulgar minha empresa?</a> no menu.</div></details>
           <details class="faq"><summary>Posso gravar minha palestra?<span class="plus">+</span></summary><div class="faq-a">Não é permitido fazer gravações próprias durante a sua palestra. O time de mídia do evento registra os conteúdos e o material é disponibilizado depois.</div></details>
           <details class="faq"><summary>Posso levar acompanhante?<span class="plus">+</span></summary><div class="faq-a">Sim, você tem direito a 1 ingresso cortesia para um acompanhante. Preencha o formulário na seção Benefícios.</div></details>
           <details class="faq"><summary>Quantos acompanhantes posso levar?<span class="plus">+</span></summary><div class="faq-a">O benefício garante 1 ingresso cortesia por palestrante.</div></details>
           <details class="faq"><summary>Qual horário preciso chegar?<span class="plus">+</span></summary><div class="faq-a">Pelo menos 1 hora e 45 minutos antes do horário da sua palestra.</div></details>
-          <details class="faq"><summary>Onde fica minha sala?<span class="plus">+</span></summary><div class="faq-a">As salas de trilha ficam no 4º andar. O número da sua sala específica <span class="badge pending">será atualizado em breve</span>.</div></details>
+          <details class="faq"><summary>Onde fica minha sala?<span class="plus">+</span></summary><div class="faq-a">As salas de trilha ficam no 4º andar. O número da sua sala específica aparece na seção <a href="#sua-participacao">Sua participação</a> depois que você faz login com seu e-mail.</div></details>
           <details class="faq"><summary>Onde fica o credenciamento?<span class="plus">+</span></summary><div class="faq-a">No térreo da Faculdade Dom Bosco.</div></details>
-          <details class="faq"><summary>Onde fica a Sala de Staff?<span class="plus">+</span></summary><div class="faq-a"><span class="badge pending">Em breve</span> — localização exata será informada pela organização.</div></details>
-          <details class="faq"><summary>Como funciona o controle de tempo?<span class="plus">+</span></summary><div class="faq-a">Cada palestra tem 30 minutos, cronometrados pela pessoa responsável pela sala.</div></details>
+          <details class="faq"><summary>Onde fica a Sala de Staff?<span class="plus">+</span></summary><div class="faq-a">4º andar, sala 405.</div></details>
+          <details class="faq"><summary>Como funciona o controle de tempo?<span class="plus">+</span></summary><div class="faq-a">Cada atividade prática — workshop, lab, mentoria ou roda de conversa — tem sua própria duração, definida na grade oficial. Já as palestras têm, em geral e obrigatoriamente, 30 minutos. Em todos os casos, o tempo é cronometrado pela pessoa responsável pela sala, com o apoio da própria pessoa palestrante para manter o ritmo.</div></details>
           <details class="faq"><summary>Quantas perguntas serão feitas?<span class="plus">+</span></summary><div class="faq-a">No máximo 2 perguntas, sempre depois do conteúdo da palestra.</div></details>
-          <details class="faq"><summary>Haverá certificado?<span class="plus">+</span></summary><div class="faq-a"><span class="badge pending">Em breve</span> — informação será atualizada pela organização.</div></details>
-          <details class="faq"><summary>Como receberei as fotos?<span class="plus">+</span></summary><div class="faq-a">O time de mídia voluntário disponibiliza o material depois do evento.</div></details>
+          <details class="faq"><summary>Haverá certificado?<span class="plus">+</span></summary><div class="faq-a">Sim, e não é só o certificado padrão de participação: ele também considera +10 horas dedicadas à preparação da sua apresentação. Veja os detalhes na seção Benefícios.</div></details>
+          <details class="faq"><summary>Como receberei as fotos?<span class="plus">+</span></summary><div class="faq-a">Todo o material será disponibilizado pós-evento, com link enviado por e-mail.</div></details>
           <details class="faq"><summary>Quem devo procurar se tiver um problema?<span class="plus">+</span></summary><div class="faq-a">No dia do evento, procure a pessoa responsável pela sua sala. Para qualquer outra solicitação, escreva para gdgpoars@gmail.com.</div></details>
           <details class="faq"><summary>O que faço se não puder comparecer?<span class="plus">+</span></summary><div class="faq-a">Entre em contato imediatamente pelo e-mail oficial: gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
         </div>
@@ -928,7 +1067,8 @@
           <div class="card">
             <h3>📱 WhatsApp</h3>
             <p>O WhatsApp pessoal da Fe está disponível para dúvidas rápidas e situações urgentes.</p>
-            <div class="callout" style="margin-top:12px;">
+            <a href="https://wa.me/5554991299262" target="_blank" rel="noopener" class="btn btn-primary btn-small" style="margin-top:4px;">Chamar no WhatsApp</a>
+            <div class="callout" style="margin-top:16px;">
               <p>WhatsApp é ótimo para "Fe, preciso falar contigo rapidinho". E-mail é onde fazemos a magia administrativa acontecer 🪄</p>
             </div>
           </div>
