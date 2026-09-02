@@ -147,6 +147,34 @@
   .login-box.logged{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:rgba(127,217,160,.06); border-color:rgba(127,217,160,.3);}
   .login-box.logged span{font-size:14px;}
 
+  .reading-progress-track{
+    position:fixed; top:0; left:0; right:0; height:4px; z-index:300;
+    background:var(--bg-raised-2);
+  }
+  .reading-progress-fill{
+    height:100%; width:0%; background:linear-gradient(90deg,var(--pumpkin),var(--violet));
+    transition:width .4s ease;
+  }
+  .progress-pill{
+    display:inline-flex; align-items:center; gap:6px; font-size:13px;
+    padding:5px 12px; border-radius:999px; background:rgba(255,122,60,.1);
+    color:var(--pumpkin); border:1px solid rgba(255,122,60,.3); margin-left:10px;
+  }
+
+  .admin-login-form{display:flex; flex-wrap:wrap; gap:10px; max-width:420px; margin-top:14px;}
+  .admin-login-form input{
+    flex:1; min-width:160px; background:var(--bg-raised-2); border:1px solid var(--line-strong);
+    border-radius:10px; padding:11px 14px; color:var(--ink); font-family:'Inter'; font-size:14px;
+  }
+  .admin-table{width:100%; border-collapse:collapse; margin-top:20px; font-size:14px;}
+  .admin-table th{
+    text-align:left; padding:10px 12px; color:var(--ink-faint); font-size:12px;
+    text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--line-strong);
+  }
+  .admin-table td{padding:12px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  .admin-bar-track{width:120px; height:8px; border-radius:999px; background:var(--bg-raised-2); overflow:hidden; display:inline-block; vertical-align:middle; margin-right:8px;}
+  .admin-bar-fill{height:100%; background:linear-gradient(90deg,var(--pumpkin),var(--violet));}
+
   /* generic components */
   .grid{display:grid; gap:20px;}
   .grid-2{grid-template-columns:repeat(2,1fr);}
@@ -292,6 +320,65 @@
 </head>
 <body>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCHs6hQMyoS1xFSC9q3amI2nbQW1vaOHxI",
+    authDomain: "manualpalestrantesdevfestpoa.firebaseapp.com",
+    projectId: "manualpalestrantesdevfestpoa",
+    storageBucket: "manualpalestrantesdevfestpoa.firebasestorage.app",
+    messagingSenderId: "795830941588",
+    appId: "1:795830941588:web:35b88ae0418afd61c98181"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const ADMIN_EMAILS = ['gdgpoars@gmail.com', 'gdgcaxiasdosul@gmail.com'];
+
+  window.__fb = {
+    async saveProgress(hash, sectionsMap){
+      try {
+        await setDoc(doc(db, 'progress', hash), {
+          sections: sectionsMap,
+          lastUpdated: serverTimestamp()
+        }, { merge: true });
+      } catch(e){ console.warn('Falha ao salvar progresso:', e); }
+    },
+    async loadProgress(hash){
+      try {
+        const snap = await getDoc(doc(db, 'progress', hash));
+        return snap.exists() ? snap.data() : null;
+      } catch(e){ console.warn('Falha ao carregar progresso:', e); return null; }
+    },
+    async adminSignIn(email, password){
+      await signInWithEmailAndPassword(auth, email, password);
+    },
+    adminSignOut(){ return signOut(auth); },
+    async adminGetAll(){
+      const snap = await getDocs(collection(db, 'progress'));
+      const out = [];
+      snap.forEach(d => out.push({ id: d.id, ...d.data() }));
+      return out;
+    },
+    onAdminAuthChange(cb){
+      onAuthStateChanged(auth, (user) => {
+        const ok = !!(user && user.email && ADMIN_EMAILS.includes(user.email));
+        cb(ok, user);
+      });
+    }
+  };
+
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<div class="reading-progress-track" id="readingProgressTrack" style="display:none;">
+  <div class="reading-progress-fill" id="readingProgressFill"></div>
+</div>
+
 <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="sidenav">☰ Menu</button>
 <div class="scrim" id="scrim"></div>
 
@@ -340,6 +427,7 @@
     <a class="navlink" href="#checklist"><span class="em">✅</span> Checklist final</a>
     <a class="navlink" href="#faq"><span class="em">💬</span> FAQ</a>
     <a class="navlink" href="#contato"><span class="em">📬</span> Fale com a organização</a>
+    <a class="navlink" href="#admin-dashboard"><span class="em">📊</span> Painel de leitura (admin)</a>
   </nav>
 
   <main>
@@ -366,7 +454,10 @@
         </div>
 
         <div class="login-box logged" id="loggedBox" style="display:none;">
-          <span id="loggedAs"></span>
+          <span>
+            <span id="loggedAs"></span>
+            <span class="progress-pill" id="myProgressPill" style="display:none;">📖 <span id="myProgressPillText">0% lido</span></span>
+          </span>
           <button class="btn btn-ghost btn-small" id="logoutBtn" type="button">Trocar e-mail</button>
         </div>
 
@@ -1076,6 +1167,37 @@
       </div>
     </section>
 
+    <!-- PAINEL ADMIN DE PROGRESSO -->
+    <section id="admin-dashboard">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">📊 Restrito à organização</div>
+          <h2>Painel de leitura das pessoas palestrantes</h2>
+          <p>Esse painel mostra, para cada pessoa que já acessou o manual, quanto do conteúdo ela já leu. O acesso exige login separado (e-mail + senha do Firebase) — diferente do login rápido usado lá em cima.</p>
+        </div>
+
+        <div id="adminLoginArea">
+          <div class="admin-login-form">
+            <input type="email" id="adminEmail" placeholder="e-mail do admin" autocomplete="username">
+            <input type="password" id="adminPassword" placeholder="senha" autocomplete="current-password">
+            <button class="btn btn-primary btn-small" id="adminSignInBtn" type="button">Entrar no painel</button>
+          </div>
+          <p id="adminLoginMsg" style="font-size:13px; margin-top:10px;"></p>
+        </div>
+
+        <div id="adminDashboardArea" style="display:none;">
+          <div class="panel-links" style="margin-bottom:20px;">
+            <span class="badge ok" id="adminWhoAmI"></span>
+            <button class="btn btn-ghost btn-small" id="adminSignOutBtn" type="button">Sair do painel</button>
+            <button class="btn btn-ghost btn-small" id="adminRefreshBtn" type="button">🔄 Atualizar</button>
+          </div>
+          <div id="adminTableWrap">
+            <p style="font-size:13.5px;">Carregando dados…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     </div><!-- /gatedContent -->
 
   </main>
@@ -1224,6 +1346,103 @@
   const HERO_LEDE_DEFAULT = 'Este manual é exclusivo para quem foi selecionada(o) para palestrar no DevFest Porto Alegre 2026. Entre com o e-mail que você usou na inscrição para acessar.';
   const STORAGE_KEY = 'devfestpoa26_manual_auth';
 
+  // --- fila de prontidão do Firebase (o módulo carrega de forma assíncrona) ---
+  let fbReady = false;
+  let fbQueue = [];
+  window.addEventListener('firebase-ready', () => {
+    fbReady = true;
+    fbQueue.forEach(fn => fn());
+    fbQueue = [];
+  });
+  function whenFirebaseReady(fn){ if(fbReady) fn(); else fbQueue.push(fn); }
+
+  // --- seções rastreadas como "lidas" ---
+  const SECTION_IDS = ['comece-aqui','sua-participacao','envio','tempo','perguntas','live-coding','seguranca','branding','divulgacao','boas-praticas','empresa','beneficios','acompanhante','cupom','chegada','mapa','gravacao','grade','comunidade','acessibilidade','conduta','plano-b','checklist','faq','contato'];
+  const SECTION_LABELS = {
+    'comece-aqui':'Comece aqui','sua-participacao':'Sua participação','envio':'Envio da apresentação',
+    'tempo':'Tempo de palestra','perguntas':'Perguntas','live-coding':'Live coding','seguranca':'Segurança',
+    'branding':'Branding oficial','divulgacao':'Material de divulgação','boas-praticas':'Boas práticas visuais',
+    'empresa':'Divulgar empresa','beneficios':'Benefícios','acompanhante':'Acompanhante','cupom':'Cupom',
+    'chegada':'Chegada','mapa':'Mapa do evento','gravacao':'Gravações','grade':'Grade/trilha',
+    'comunidade':'Valores','acessibilidade':'Acessibilidade','conduta':'Código de conduta',
+    'plano-b':'Plano B','checklist':'Checklist final','faq':'FAQ','contato':'Contato'
+  };
+
+  let currentHash = null;
+  let sectionsRead = {};
+  let readObserver = null;
+  let saveTimer = null;
+
+  function scheduleSave(){
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      if(!currentHash) return;
+      whenFirebaseReady(() => window.__fb.saveProgress(currentHash, sectionsRead));
+    }, 1500);
+  }
+
+  function updateMyProgressUI(){
+    const total = SECTION_IDS.length;
+    const done = Object.keys(sectionsRead).filter(k => sectionsRead[k]).length;
+    const pct = Math.round((done/total)*100);
+    const fill = document.getElementById('readingProgressFill');
+    const track = document.getElementById('readingProgressTrack');
+    const pill = document.getElementById('myProgressPill');
+    const pillText = document.getElementById('myProgressPillText');
+    if(fill) fill.style.width = pct + '%';
+    if(track) track.style.display = 'block';
+    if(pill) pill.style.display = 'inline-flex';
+    if(pillText) pillText.textContent = pct + '% lido';
+  }
+
+  function markSectionRead(id){
+    if(sectionsRead[id]) return;
+    sectionsRead[id] = true;
+    updateMyProgressUI();
+    scheduleSave();
+  }
+
+  function startReadTracking(hash, previousSections){
+    currentHash = hash;
+    sectionsRead = previousSections && typeof previousSections === 'object' ? {...previousSections} : {};
+    updateMyProgressUI();
+
+    if(readObserver) readObserver.disconnect();
+    const timers = {};
+    readObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.id;
+        if(entry.isIntersecting && entry.intersectionRatio >= 0.5){
+          if(!timers[id]){
+            timers[id] = setTimeout(() => {
+              markSectionRead(id);
+              readObserver.unobserve(entry.target);
+            }, 1500);
+          }
+        } else if(timers[id]){
+          clearTimeout(timers[id]);
+          delete timers[id];
+        }
+      });
+    }, { threshold: [0.5] });
+
+    SECTION_IDS.forEach(id => {
+      if(sectionsRead[id]) return; // já lida, não precisa observar de novo
+      const el = document.getElementById(id);
+      if(el) readObserver.observe(el);
+    });
+  }
+
+  function stopReadTracking(){
+    if(readObserver){ readObserver.disconnect(); readObserver = null; }
+    currentHash = null;
+    sectionsRead = {};
+    const track = document.getElementById('readingProgressTrack');
+    const pill = document.getElementById('myProgressPill');
+    if(track) track.style.display = 'none';
+    if(pill) pill.style.display = 'none';
+  }
+
   // localStorage com fallback: se falhar (ex: dentro de um preview sandboxed),
   // o login simplesmente não persiste entre recarregamentos, mas continua funcionando na sessão atual.
   function safeStorageGet(key){
@@ -1295,6 +1514,13 @@
 
     // guarda o login (só o hash, nunca o e-mail em texto puro) para a próxima visita
     if(hash) safeStorageSet(STORAGE_KEY, hash);
+
+    // carrega progresso salvo (se existir) e começa a rastrear a leitura
+    whenFirebaseReady(() => {
+      window.__fb.loadProgress(hash).then(saved => {
+        startReadTracking(hash, saved && saved.sections);
+      });
+    });
   }
 
   function applyAdmin(label, hash){
@@ -1311,6 +1537,7 @@
     panelHint.classList.remove('ok');
     panelHint.classList.add('pending');
     // painel e tempo ficam no estado padrão "Em breve" (já é o default do HTML, nada a preencher)
+    // admins não têm progresso de leitura rastreado (não são pessoas palestrantes)
 
     if(hash) safeStorageSet(STORAGE_KEY, hash);
   }
@@ -1355,6 +1582,7 @@
     clockAlert.textContent = '--:--';
     clockEnd.textContent = '--:--';
     safeStorageRemove(STORAGE_KEY);
+    stopReadTracking();
     lockManual();
     window.scrollTo({top:0, behavior:'instant'});
   });
@@ -1370,6 +1598,98 @@
       applyAdmin(ADMINS[savedHash], savedHash);
     }
   })();
+
+  // ---------------------------------------------------------------
+  // PAINEL ADMIN — login real via Firebase Auth (e-mail + senha)
+  // ---------------------------------------------------------------
+  const adminEmailInput = document.getElementById('adminEmail');
+  const adminPasswordInput = document.getElementById('adminPassword');
+  const adminSignInBtn = document.getElementById('adminSignInBtn');
+  const adminLoginMsg = document.getElementById('adminLoginMsg');
+  const adminLoginArea = document.getElementById('adminLoginArea');
+  const adminDashboardArea = document.getElementById('adminDashboardArea');
+  const adminWhoAmI = document.getElementById('adminWhoAmI');
+  const adminSignOutBtn = document.getElementById('adminSignOutBtn');
+  const adminRefreshBtn = document.getElementById('adminRefreshBtn');
+  const adminTableWrap = document.getElementById('adminTableWrap');
+
+  function renderAdminTable(rows){
+    if(!rows.length){
+      adminTableWrap.innerHTML = '<p style="font-size:13.5px;">Ainda ninguém acessou o manual.</p>';
+      return;
+    }
+    // tenta enriquecer com nome real via SPEAKERS (o doc no Firestore só guarda o hash, nunca o e-mail)
+    const enriched = rows.map(r => {
+      const speaker = SPEAKERS[r.id];
+      const nome = speaker ? speaker.nomeCompleto : (ADMINS[r.id] ? '(admin) ' + ADMINS[r.id] : 'Desconhecido (' + r.id + ')');
+      const sections = r.sections || {};
+      const done = SECTION_IDS.filter(id => sections[id]).length;
+      const pct = Math.round((done / SECTION_IDS.length) * 100);
+      const pendentes = SECTION_IDS.filter(id => !sections[id]).map(id => SECTION_LABELS[id] || id);
+      return { nome, pct, done, total: SECTION_IDS.length, pendentes };
+    }).sort((a,b) => b.pct - a.pct);
+
+    let html = '<table class="admin-table"><thead><tr><th>Nome</th><th>Progresso</th><th>Seções pendentes</th></tr></thead><tbody>';
+    enriched.forEach(r => {
+      html += '<tr>' +
+        '<td>' + r.nome + '</td>' +
+        '<td><span class="admin-bar-track"><span class="admin-bar-fill" style="width:' + r.pct + '%"></span></span>' + r.pct + '% (' + r.done + '/' + r.total + ')</td>' +
+        '<td style="font-size:12.5px; color:var(--ink-faint); max-width:360px;">' + (r.pendentes.length ? r.pendentes.join(', ') : '— tudo lido 🎉') + '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table>';
+    adminTableWrap.innerHTML = html;
+  }
+
+  function loadAdminTable(){
+    adminTableWrap.innerHTML = '<p style="font-size:13.5px;">Carregando dados…</p>';
+    whenFirebaseReady(() => {
+      window.__fb.adminGetAll().then(renderAdminTable).catch(err => {
+        adminTableWrap.innerHTML = '<p style="font-size:13.5px; color:var(--danger);">Erro ao carregar: ' + err.message + '</p>';
+      });
+    });
+  }
+
+  if(adminSignInBtn){
+    adminSignInBtn.addEventListener('click', () => {
+      const email = adminEmailInput.value.trim();
+      const pass = adminPasswordInput.value;
+      if(!email || !pass){ adminLoginMsg.textContent = 'Preencha e-mail e senha.'; adminLoginMsg.style.color = 'var(--danger)'; return; }
+      adminLoginMsg.textContent = 'Entrando…';
+      adminLoginMsg.style.color = 'var(--ink-muted)';
+      whenFirebaseReady(() => {
+        window.__fb.adminSignIn(email, pass).catch(err => {
+          adminLoginMsg.textContent = 'Não foi possível entrar: ' + err.message;
+          adminLoginMsg.style.color = 'var(--danger)';
+        });
+      });
+    });
+  }
+
+  if(adminSignOutBtn){
+    adminSignOutBtn.addEventListener('click', () => {
+      whenFirebaseReady(() => window.__fb.adminSignOut && window.__fb.adminSignOut());
+    });
+  }
+
+  if(adminRefreshBtn){
+    adminRefreshBtn.addEventListener('click', loadAdminTable);
+  }
+
+  whenFirebaseReady(() => {
+    window.__fb.onAdminAuthChange((isAdmin, user) => {
+      if(isAdmin){
+        adminLoginArea.style.display = 'none';
+        adminDashboardArea.style.display = 'block';
+        adminWhoAmI.textContent = '🟢 ' + user.email;
+        loadAdminTable();
+      } else {
+        adminLoginArea.style.display = 'block';
+        adminDashboardArea.style.display = 'none';
+        adminLoginMsg.textContent = '';
+      }
+    });
+  });
 </script>
 
 </body>
