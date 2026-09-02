@@ -144,8 +144,19 @@
   .login-msg{font-size:13px; margin-top:10px; min-height:0;}
   .login-msg.error{color:var(--danger);}
   .login-msg.ok{color:var(--ok);}
-  .login-box.logged{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:rgba(127,217,160,.06); border-color:rgba(127,217,160,.3);}
+  .login-box.logged{display:block; background:rgba(127,217,160,.06); border-color:rgba(127,217,160,.3);}
+  .logged-row{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
   .login-box.logged span{font-size:14px;}
+  .logged-progress{margin-top:16px;}
+  .logged-progress-track{height:8px; border-radius:999px; background:var(--bg-raised-2); overflow:hidden;}
+  .logged-progress-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--pumpkin),var(--violet)); transition:width .4s ease;}
+  .logged-progress-label{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:8px; font-size:13px; flex-wrap:wrap;}
+  .logged-progress-label strong{color:var(--pumpkin);}
+  .logged-progress-count{color:var(--ink-faint); font-size:12.5px;}
+  @media (max-width:480px){
+    .logged-row{flex-direction:column; align-items:stretch;}
+    .logged-row #logoutBtn{align-self:flex-start;}
+  }
 
   .reading-progress-track{
     position:fixed; top:0; left:0; right:0; height:4px; z-index:300;
@@ -154,11 +165,6 @@
   .reading-progress-fill{
     height:100%; width:0%; background:linear-gradient(90deg,var(--pumpkin),var(--violet));
     transition:width .4s ease;
-  }
-  .progress-pill{
-    display:inline-flex; align-items:center; gap:6px; font-size:13px;
-    padding:5px 12px; border-radius:999px; background:rgba(255,122,60,.1);
-    color:var(--pumpkin); border:1px solid rgba(255,122,60,.3); margin-left:10px;
   }
 
   .admin-login-form{display:flex; flex-wrap:wrap; gap:10px; max-width:420px; margin-top:14px;}
@@ -204,6 +210,21 @@
   @keyframes bounce-arrow{
     0%, 100% { transform:translateY(0); }
     50% { transform:translateY(8px); }
+  }
+
+  .back-to-top{
+    position:fixed; left:20px; bottom:24px; z-index:250;
+    width:46px; height:46px; border-radius:50%;
+    background:var(--bg-raised); border:1px solid var(--line-strong);
+    color:var(--pumpkin); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.35);
+    opacity:0; pointer-events:none; transform:translateY(12px);
+    transition:opacity .2s ease, transform .2s ease, border-color .15s ease;
+  }
+  .back-to-top.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .back-to-top:hover{ border-color:var(--pumpkin); }
+  @media (max-width:980px){
+    .back-to-top{ left:14px; bottom:14px; width:42px; height:42px; }
   }
 
   /* generic components */
@@ -430,6 +451,10 @@
 <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="sidenav">☰ Menu</button>
 <div class="scrim" id="scrim"></div>
 
+<button class="back-to-top" id="backToTop" aria-label="Voltar ao topo" title="Voltar ao topo">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <div class="shell">
   <nav class="sidenav" id="sidenav" aria-label="Navegação do manual" style="display:none;">
     <a href="#topo" class="brand">
@@ -438,7 +463,7 @@
     </a>
 
     <div class="navgroup-label">Comece aqui</div>
-    <a class="navlink" href="#comece-aqui"><span class="em">👋</span> Boas-vindas</a>
+    <a class="navlink" href="#comece-aqui"><span class="em">👋</span> Início / Boas-vindas</a>
     <a class="navlink" href="#sua-participacao"><span class="em">🎃</span> Sua participação</a>
 
     <div class="navgroup-label">Prepare sua palestra</div>
@@ -502,11 +527,19 @@
         </div>
 
         <div class="login-box logged" id="loggedBox" style="display:none;">
-          <span>
+          <div class="logged-row">
             <span id="loggedAs"></span>
-            <span class="progress-pill" id="myProgressPill" style="display:none;">📖 <span id="myProgressPillText">0% lido</span></span>
-          </span>
-          <button class="btn btn-ghost btn-small" id="logoutBtn" type="button">Trocar e-mail</button>
+            <button class="btn btn-ghost btn-small" id="logoutBtn" type="button">Trocar e-mail</button>
+          </div>
+          <div class="logged-progress" id="myProgressBlock" style="display:none;">
+            <div class="logged-progress-track">
+              <div class="logged-progress-fill" id="myProgressBarFill"></div>
+            </div>
+            <div class="logged-progress-label">
+              <span>📖 <strong id="myProgressPct">0%</strong> do manual lido</span>
+              <span id="myProgressCount" class="logged-progress-count">0 de 25 seções</span>
+            </div>
+          </div>
         </div>
 
         <div class="cta-row" id="ctaRow" style="display:none;">
@@ -1267,6 +1300,17 @@
 </footer>
 
 <script>
+  // botão voltar ao topo
+  const backToTopBtn = document.getElementById('backToTop');
+  if(backToTopBtn){
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('show', window.scrollY > 500);
+    }, { passive: true });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // mobile nav
   const menuToggle = document.getElementById('menuToggle');
   const sidenav = document.getElementById('sidenav');
@@ -1437,12 +1481,17 @@
     const pct = Math.round((done/total)*100);
     const fill = document.getElementById('readingProgressFill');
     const track = document.getElementById('readingProgressTrack');
-    const pill = document.getElementById('myProgressPill');
-    const pillText = document.getElementById('myProgressPillText');
     if(fill) fill.style.width = pct + '%';
     if(track) track.style.display = 'block';
-    if(pill) pill.style.display = 'inline-flex';
-    if(pillText) pillText.textContent = pct + '% lido';
+
+    const block = document.getElementById('myProgressBlock');
+    const barFill = document.getElementById('myProgressBarFill');
+    const pctEl = document.getElementById('myProgressPct');
+    const countEl = document.getElementById('myProgressCount');
+    if(block) block.style.display = 'block';
+    if(barFill) barFill.style.width = pct + '%';
+    if(pctEl) pctEl.textContent = pct + '%';
+    if(countEl) countEl.textContent = done + ' de ' + total + ' seções';
   }
 
   function markSectionRead(id){
@@ -1521,9 +1570,9 @@
     currentHash = null;
     sectionsRead = {};
     const track = document.getElementById('readingProgressTrack');
-    const pill = document.getElementById('myProgressPill');
+    const block = document.getElementById('myProgressBlock');
     if(track) track.style.display = 'none';
-    if(pill) pill.style.display = 'none';
+    if(block) block.style.display = 'none';
   }
 
   // localStorage com fallback: se falhar (ex: dentro de um preview sandboxed),
