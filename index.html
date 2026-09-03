@@ -694,7 +694,7 @@
           <h2>Seu tempo é sagrado. Cronometrado do início ao fim.</h2>
         </div>
         <div class="big-time" id="bigTime">--<small id="bigTimeLabel">faça login para ver sua duração</small></div>
-        <p style="max-width:60ch;">A duração varia conforme o formato da sua atividade — palestra, workshop, laboratório, mentoria ou roda de conversa — e está definida na grade oficial. O tempo é cronometrado pela pessoa responsável pela sala e acompanhado por você, com o cronômetro disponibilizado pela organização.</p>
+        <p style="max-width:60ch;">Toda <strong style="color:var(--ink);">Palestra</strong> tem duração obrigatória de <strong style="color:var(--ink);">30 minutos</strong> — mesmo que o horário na grade pareça maior, aquele tempo extra é o respiro entre uma atividade e outra, não é tempo de fala. Já Workshops, Labs, Mentorias e Rodas de conversa têm um tempo personalizado próprio, sem espaço específico para perguntas (elas acontecem durante a própria atividade). Em todos os casos, o tempo é cronometrado pela pessoa responsável pela sala e acompanhado por você, com o cronômetro disponibilizado pela organização.</p>
         <div class="clock-row">
           <div class="clock-step"><div class="t">00:00</div><div class="l">Início da sua atividade</div></div>
           <div class="clock-step"><div class="t" id="clockAlert">--:--</div><div class="l">Sinal de reta final</div></div>
@@ -1411,6 +1411,18 @@
     return m ? parseInt(m[1], 10) : null;
   }
 
+  // Regra oficial: toda "Palestra" tem duração obrigatória de 30 minutos, mesmo que o
+  // intervalo da grade seja maior (a grade inclui um respiro/buffer entre atividades,
+  // que não é tempo de fala da pessoa). Outros formatos (Workshop, Lab, Mentoria,
+  // Roda de conversa) usam o tempo personalizado real, exatamente como está na grade.
+  function effectiveMinutes(talk){
+    if(!talk) return null;
+    if(talk.tipo === 'Palestra' || talk.tipo === 'Palestra patrocinada'){
+      return 30;
+    }
+    return durationMinutes(talk.duracao);
+  }
+
   function fmtElapsed(mins){
     // formata minutos decorridos como MM:SS-style relativo (ex: 25 -> "25:00"), sem expor horário real de término
     const h = Math.floor(mins/60);
@@ -1589,12 +1601,16 @@
   }
 
   function renderTalkBlock(talk){
+    const mins = effectiveMinutes(talk);
+    const duracaoLabel = (talk.tipo === 'Palestra' || talk.tipo === 'Palestra patrocinada') && mins
+      ? mins + ' minutos'
+      : talk.duracao;
     return '<div class="panel-rows" data-talk-block style="margin-top:14px;">' +
       '<div class="panel-row"><div class="k">🎤 Atividade</div><div class="v">' + talk.titulo + '</div></div>' +
       '<div class="panel-row"><div class="k">🧙 Trilha</div><div class="v">' + talk.trilha + '</div></div>' +
       '<div class="panel-row"><div class="k">📍 Sala</div><div class="v">' + (talk.sala || 'Em breve') + '</div></div>' +
       '<div class="panel-row"><div class="k">⏰ Horário de início</div><div class="v">' + talk.inicio + '</div></div>' +
-      '<div class="panel-row"><div class="k">⏱️ Duração</div><div class="v">' + talk.duracao + '</div></div>' +
+      '<div class="panel-row"><div class="k">⏱️ Duração</div><div class="v">' + duracaoLabel + '</div></div>' +
       '<div class="panel-row"><div class="k">🎬 Formato</div><div class="v">' + talk.tipo + '</div></div>' +
       (talk.tags ? '<div class="panel-row" style="grid-column:1/-1;"><div class="k">🏷️ Tags</div><div class="v" style="font-size:13px;">' + talk.tags + '</div></div>' : '') +
     '</div>';
@@ -1638,7 +1654,8 @@
     panelTalksWrap.innerHTML = data.talks.map(renderTalkBlock).join('');
 
     // tempo section — usa a primeira atividade como referência (tempo relativo, sem expor horário de término)
-    const mins = durationMinutes(data.talks[0].duracao);
+    // regra oficial: Palestra = 30min fixo; outros formatos = tempo personalizado real da grade
+    const mins = effectiveMinutes(data.talks[0]);
     if(mins){
       bigTime.childNodes[0].textContent = mins;
       bigTimeLabel.textContent = 'minutos na sua atividade';
