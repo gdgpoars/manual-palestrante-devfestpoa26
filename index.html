@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual da Pessoa Palestrante · DevFest Porto Alegre 2026</title>
+<meta name="description" content="Guia oficial para quem vai palestrar no DevFest Porto Alegre 2026. Tudo o que você precisa saber antes, durante e depois do evento.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎤</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0d13;
+    --bg-raised:#14151f;
+    --bg-raised-2:#1b1c29;
+    --line:rgba(243,241,236,0.12);
+    --line-strong:rgba(243,241,236,0.24);
+    --ink:#f3f1ec;
+    --ink-muted:#a5a2b3;
+    --ink-faint:#6f6c7d;
+    --pumpkin:#ff7a3c;
+    --pumpkin-dim:#7a3a1c;
+    --violet:#8b6bff;
+    --violet-dim:#2c2450;
+    --ok:#7fd9a0;
+    --warn:#ffd166;
+    --danger:#ff6b6b;
+    --radius-s:10px;
+    --radius-m:16px;
+    --radius-l:26px;
+    --maxw:1480px;
+    --nav-w:272px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    width:100%;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.display{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    font-weight:600;
+    line-height:1.12;
+    margin:0 0 .5em;
+    letter-spacing:-0.01em;
+  }
+  p{margin:0 0 1em; color:var(--ink-muted); max-width:62ch;}
+  a{color:var(--pumpkin);}
+  a.plain{color:inherit;}
+  ::selection{background:var(--pumpkin); color:#191008;}
+  :focus-visible{outline:2px solid var(--pumpkin); outline-offset:3px;}
+  img{max-width:100%;display:block;}
+  ul,ol{margin:0 0 1em; padding-left:1.2em; color:var(--ink-muted);}
+  li{margin-bottom:.4em;}
+  code{font-family:ui-monospace,'SF Mono',Menlo,monospace; background:var(--bg-raised-2); padding:.15em .45em; border-radius:6px; font-size:.9em; color:var(--pumpkin);}
+
+  /* layout shell */
+  .shell{display:flex; min-height:100vh; width:100%;}
+  .sidenav{
+    width:var(--nav-w); flex-shrink:0;
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+    border-right:1px solid var(--line);
+    padding:28px 22px 40px;
+    background:linear-gradient(180deg,var(--bg-raised),var(--bg));
+  }
+  .brand{display:flex; align-items:center; gap:10px; margin-bottom:26px; text-decoration:none; color:var(--ink);}
+  .brand .mark{font-size:26px;}
+  .brand .word{font-family:'Space Grotesk'; font-weight:700; font-size:15px; line-height:1.15;}
+  .brand .word small{display:block; font-weight:500; color:var(--ink-faint); font-size:11px; letter-spacing:.02em;}
+  .navgroup{margin-bottom:6px;}
+  .navgroup-label{font-size:11px; color:var(--ink-faint); margin:18px 0 6px; padding-left:10px; text-transform:uppercase; letter-spacing:.08em;}
+  .navlink{
+    display:flex; align-items:center; gap:9px;
+    padding:8px 10px; border-radius:9px;
+    font-size:14px; color:var(--ink-muted); text-decoration:none;
+    transition:background .15s, color .15s;
+  }
+  .navlink:hover{background:var(--bg-raised-2); color:var(--ink);}
+  .navlink.active{background:var(--violet-dim); color:var(--ink);}
+  .navlink .em{font-size:15px;}
+
+  .menu-toggle{display:none;}
+  main{flex:1; min-width:0; width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  section{padding:88px 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--pumpkin); font-weight:600; margin-bottom:14px;}
+  .section-head{max-width:640px; margin-bottom:44px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);}
+
+  /* hero */
+  .hero{
+    min-height:92vh; display:flex; flex-direction:column; justify-content:center;
+    border-bottom:1px solid var(--line);
+    position:relative; overflow:hidden;
+    padding:120px 0 80px;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:-20% -10% auto auto; width:520px; height:520px;
+    background:radial-gradient(circle,rgba(255,122,60,.22),transparent 70%); pointer-events:none;
+  }
+  .hero::after{
+    content:""; position:absolute; bottom:-25%; left:-10%; width:600px; height:600px;
+    background:radial-gradient(circle,rgba(139,107,255,.18),transparent 70%); pointer-events:none;
+  }
+  .hero-kicker{font-size:14px; color:var(--ink-faint); margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .hero-kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--pumpkin); display:inline-block;}
+  .hero h1{font-size:clamp(40px,6vw,72px); max-width:14ch; position:relative; z-index:1;}
+  .hero .lede{font-size:19px; max-width:52ch; color:var(--ink-muted); position:relative; z-index:1;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:28px; margin:34px 0 40px; position:relative; z-index:1;}
+  .hero-meta div{font-size:15px;}
+  .hero-meta strong{display:block; font-family:'Space Grotesk'; font-size:17px; margin-bottom:2px;}
+  .cta-row{display:flex; flex-wrap:wrap; gap:14px; position:relative; z-index:1;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 24px; border-radius:999px; font-weight:600; font-size:15px;
+    text-decoration:none; cursor:pointer; border:1px solid transparent;
+    font-family:'Inter'; transition:transform .12s ease, background .15s;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--pumpkin); color:#1a0e05;}
+  .btn-primary:hover{background:#ff8f5c;}
+  .btn-ghost{background:transparent; border-color:var(--line-strong); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--pumpkin); color:var(--pumpkin);}
+  .btn-small{padding:9px 16px; font-size:13px;}
+
+  .login-box{
+    position:relative; z-index:1; margin:30px 0 6px;
+    background:rgba(255,255,255,.03); border:1px solid var(--line-strong);
+    border-radius:var(--radius-m); padding:18px 20px; max-width:460px;
+  }
+  .login-label{font-size:13.5px; color:var(--ink-muted); margin-bottom:10px;}
+  .login-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .login-row input{
+    flex:1; min-width:180px; background:var(--bg-raised-2); border:1px solid var(--line-strong);
+    border-radius:10px; padding:11px 14px; color:var(--ink); font-family:'Inter'; font-size:14px;
+  }
+  .login-msg{font-size:13px; margin-top:10px; min-height:0;}
+  .login-msg.error{color:var(--danger);}
+  .login-msg.ok{color:var(--ok);}
+  .login-box.logged{display:block; background:rgba(127,217,160,.06); border-color:rgba(127,217,160,.3);}
+  .logged-row{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  .login-box.logged span{font-size:14px;}
+  .logged-progress{margin-top:16px;}
+  .logged-progress-track{height:8px; border-radius:999px; background:var(--bg-raised-2); overflow:hidden;}
+  .logged-progress-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--pumpkin),var(--violet)); transition:width .4s ease;}
+  .logged-progress-label{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:8px; font-size:13px; flex-wrap:wrap;}
+  .logged-progress-label strong{color:var(--pumpkin);}
+  .logged-progress-count{color:var(--ink-faint); font-size:12.5px;}
+  @media (max-width:480px){
+    .logged-row{flex-direction:column; align-items:stretch;}
+    .logged-row #logoutBtn{align-self:flex-start;}
+  }
+
+  .reading-progress-track{
+    position:fixed; top:0; left:0; right:0; height:4px; z-index:300;
+    background:var(--bg-raised-2);
+  }
+  .reading-progress-fill{
+    height:100%; width:0%; background:linear-gradient(90deg,var(--pumpkin),var(--violet));
+    transition:width .4s ease;
+  }
+
+  .admin-login-form{display:flex; flex-wrap:wrap; gap:10px; max-width:420px; margin-top:14px;}
+  .admin-login-form input{
+    flex:1; min-width:160px; background:var(--bg-raised-2); border:1px solid var(--line-strong);
+    border-radius:10px; padding:11px 14px; color:var(--ink); font-family:'Inter'; font-size:14px;
+  }
+  .admin-table{width:100%; border-collapse:collapse; margin-top:20px; font-size:14px;}
+  #adminTableWrap{overflow-x:auto;}
+  .admin-table th{
+    text-align:left; padding:10px 12px; color:var(--ink-faint); font-size:12px;
+    text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--line-strong);
+  }
+  .admin-table td{padding:12px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  .admin-bar-track{width:120px; height:8px; border-radius:999px; background:var(--bg-raised-2); overflow:hidden; display:inline-block; vertical-align:middle; margin-right:8px;}
+  .admin-bar-fill{height:100%; background:linear-gradient(90deg,var(--pumpkin),var(--violet));}
+
+  .journey-indicator{
+    position:relative; z-index:1; margin-top:44px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:18px;
+  }
+  .journey-text{
+    max-width:52ch; margin:0 auto; text-align:center; font-size:14.5px;
+    color:var(--ink-muted);
+  }
+  .journey-text strong{color:var(--pumpkin);}
+  .scroll-arrow{
+    position:relative; display:inline-flex; align-items:center; justify-content:center;
+    width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line-strong);
+    color:var(--pumpkin); text-decoration:none;
+    animation:bounce-arrow 1.8s ease-in-out infinite;
+  }
+  .scroll-arrow:hover{border-color:var(--pumpkin); background:rgba(255,122,60,.08);}
+  .scroll-arrow::after{
+    content:attr(data-tooltip);
+    position:absolute; bottom:-38px; left:50%; transform:translateX(-50%);
+    white-space:nowrap; font-size:12.5px; font-family:'Inter'; font-weight:500;
+    color:var(--ink); background:var(--bg-raised-2); border:1px solid var(--line-strong);
+    padding:6px 12px; border-radius:8px; opacity:0; pointer-events:none;
+    transition:opacity .15s ease;
+  }
+  .scroll-arrow:hover::after, .scroll-arrow:focus-visible::after{ opacity:1; }
+  @keyframes bounce-arrow{
+    0%, 100% { transform:translateY(0); }
+    50% { transform:translateY(8px); }
+  }
+
+  .back-to-top{
+    position:fixed; right:20px; bottom:24px; z-index:250;
+    width:46px; height:46px; border-radius:50%;
+    background:var(--bg-raised); border:1px solid var(--line-strong);
+    color:var(--pumpkin); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.35);
+    opacity:0; pointer-events:none; transform:translateY(12px);
+    transition:opacity .2s ease, transform .2s ease, border-color .15s ease;
+  }
+  .back-to-top.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .back-to-top:hover{ border-color:var(--pumpkin); }
+  @media (max-width:980px){
+    .back-to-top{ right:14px; bottom:14px; width:42px; height:42px; }
+  }
+
+  /* generic components */
+  .grid{display:grid; gap:20px;}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--bg-raised); border:1px solid var(--line);
+    border-radius:var(--radius-m); padding:24px;
+  }
+  .card h3{font-size:17px; margin-bottom:8px; display:flex; gap:10px; align-items:center;}
+  .card p{margin-bottom:0; font-size:14.5px;}
+
+  .badge{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:5px 12px; border-radius:999px; font-size:12.5px; font-weight:600;
+    background:var(--bg-raised-2); color:var(--ink-muted); border:1px solid var(--line);
+  }
+  .badge.ok{color:var(--ok); border-color:rgba(127,217,160,.35); background:rgba(127,217,160,.08);}
+  .badge.warn{color:var(--warn); border-color:rgba(255,209,102,.35); background:rgba(255,209,102,.08);}
+  .badge.pending{color:var(--ink-faint); border-style:dashed;}
+
+  .callout{
+    border-left:3px solid var(--pumpkin); background:var(--bg-raised);
+    border-radius:0 var(--radius-s) var(--radius-s) 0; padding:18px 22px; margin:20px 0;
+  }
+  .callout p{margin-bottom:0; color:var(--ink);}
+  .callout.violet{border-color:var(--violet);}
+  .callout.warn{border-color:var(--warn);}
+
+  .quote-big{
+    font-family:'Space Grotesk'; font-size:clamp(22px,3vw,32px); font-weight:600;
+    line-height:1.3; max-width:22ch; margin:28px 0; color:var(--ink);
+  }
+
+  /* speaker panel */
+  .panel{
+    background:linear-gradient(135deg,var(--bg-raised-2),var(--bg-raised));
+    border:1px solid var(--line-strong); border-radius:var(--radius-l);
+    padding:34px; position:relative; overflow:hidden;
+  }
+  .panel-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:22px; flex-wrap:wrap;}
+  .panel-rows{display:grid; gap:14px; grid-template-columns:repeat(2,1fr);}
+  @media (max-width:640px){.panel-rows{grid-template-columns:1fr;}}
+  .panel-row{padding:14px 16px; background:rgba(0,0,0,.18); border-radius:12px; border:1px solid var(--line);}
+  .panel-row .k{font-size:12px; color:var(--ink-faint); margin-bottom:4px;}
+  .panel-row .v{font-family:'Space Grotesk'; font-size:16px;}
+  .panel-links{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;}
+
+  /* timeline */
+  .timeline{position:relative; padding-left:28px; margin-top:10px;}
+  .timeline::before{content:""; position:absolute; left:8px; top:6px; bottom:6px; width:2px; background:var(--line-strong);}
+  .tl-item{position:relative; padding-bottom:26px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{content:""; position:absolute; left:-28px; top:3px; width:12px; height:12px; border-radius:50%; background:var(--pumpkin); border:3px solid var(--bg);}
+  .tl-item h4{font-size:15px; margin-bottom:2px;}
+  .tl-item span{font-size:13px; color:var(--ink-faint);}
+
+  /* 30 min statement */
+  .big-time{
+    display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+    font-family:'Space Grotesk'; font-weight:700;
+    font-size:clamp(48px,9vw,110px); line-height:1; margin:18px 0 10px; color:var(--pumpkin);
+  }
+  .big-time small{font-size:.24em; color:var(--ink); font-weight:600;}
+  .clock-row{display:flex; gap:0; margin:32px 0; border:1px solid var(--line); border-radius:var(--radius-m); overflow:hidden;}
+  .clock-step{flex:1; padding:20px; text-align:center; border-right:1px solid var(--line);}
+  .clock-step:last-child{border-right:none;}
+  .clock-step .t{font-family:'Space Grotesk'; font-size:22px; color:var(--pumpkin); margin-bottom:4px;}
+  .clock-step .l{font-size:12.5px; color:var(--ink-muted);}
+  @media (max-width:640px){.clock-row{flex-direction:column;} .clock-step{border-right:none; border-bottom:1px solid var(--line);} .clock-step:last-child{border-bottom:none;}}
+
+  /* checklist */
+  .checklist{list-style:none; padding:0; margin:0;}
+  .cl-item{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 4px;
+    border-bottom:1px solid var(--line); cursor:pointer;
+  }
+  .cl-item:last-child{border-bottom:none;}
+  .cl-item input{
+    appearance:none; -webkit-appearance:none; width:22px; height:22px; flex-shrink:0; margin-top:1px;
+    border:1.5px solid var(--line-strong); border-radius:7px; background:transparent; cursor:pointer;
+    display:grid; place-items:center; transition:border-color .15s, background .15s;
+  }
+  .cl-item input:checked{background:var(--pumpkin); border-color:var(--pumpkin);}
+  .cl-item input:checked::after{content:"✓"; font-size:14px; color:#1a0e05; font-weight:700;}
+  .cl-item label{cursor:pointer; font-size:15px; color:var(--ink);}
+  .cl-item.done label{color:var(--ink-faint); text-decoration:line-through;}
+  .progress-wrap{display:flex; align-items:center; gap:14px; margin-bottom:22px;}
+  .progress-bar{flex:1; height:8px; border-radius:999px; background:var(--bg-raised-2); overflow:hidden;}
+  .progress-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--pumpkin),var(--violet)); transition:width .3s ease;}
+  .progress-num{font-family:'Space Grotesk'; font-size:14px; white-space:nowrap; color:var(--ink-muted);}
+
+  /* accordion (faq) */
+  details.faq{border-bottom:1px solid var(--line); padding:6px 0;}
+  details.faq summary{
+    list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+    gap:16px; padding:14px 4px; font-family:'Space Grotesk'; font-size:16px; color:var(--ink);
+  }
+  details.faq summary::-webkit-details-marker{display:none;}
+  details.faq summary .plus{font-size:20px; color:var(--pumpkin); transition:transform .2s;}
+  details.faq[open] summary .plus{transform:rotate(45deg);}
+  details.faq .faq-a{padding:0 4px 18px; font-size:14.5px; color:var(--ink-muted); max-width:68ch;}
+
+  /* coupon */
+  .coupon-box{
+    background:var(--bg-raised); border:1.5px dashed var(--violet); border-radius:var(--radius-m);
+    padding:26px; display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;
+  }
+  .coupon-code{font-family:'Space Grotesk'; font-size:26px; font-weight:700; color:var(--violet); letter-spacing:.02em;}
+  .coupon-input-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .coupon-input-row input{
+    background:var(--bg-raised-2); border:1px solid var(--line-strong); border-radius:10px;
+    padding:11px 14px; color:var(--ink); font-family:'Inter'; font-size:14px; width:200px;
+  }
+
+  /* web divider */
+  .web-divider{display:flex; align-items:center; justify-content:center; padding:6px 0 0; opacity:.5;}
+
+  footer{padding:56px 28px 80px; text-align:center;}
+  footer .wrap{max-width:var(--maxw);}
+  footer p{margin:0 auto 6px; font-size:13.5px; color:var(--ink-faint);}
+
+  /* mobile nav */
+  @media (max-width:980px){
+    .sidenav{
+      position:fixed; z-index:50; left:0; top:0; height:100vh; transform:translateX(-100%);
+      transition:transform .25s ease; box-shadow:20px 0 60px rgba(0,0,0,.5);
+    }
+    .sidenav.open{transform:translateX(0);}
+    .menu-toggle{
+      display:flex; align-items:center; gap:8px; position:fixed; top:16px; left:16px; z-index:60;
+      background:var(--bg-raised); border:1px solid var(--line-strong); border-radius:999px;
+      padding:10px 16px; color:var(--ink); font-family:'Space Grotesk'; font-size:13px; cursor:pointer;
+    }
+    .scrim{position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:45; opacity:0; pointer-events:none; transition:opacity .2s;}
+    .scrim.show{opacity:1; pointer-events:auto;}
+    .wrap{padding:0 20px;}
+    section{padding:64px 0;}
+  }
+  @media (min-width:981px){.menu-toggle,.scrim{display:none;}}
+</style>
+</head>
+<body>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCHs6hQMyoS1xFSC9q3amI2nbQW1vaOHxI",
+    authDomain: "manualpalestrantesdevfestpoa.firebaseapp.com",
+    projectId: "manualpalestrantesdevfestpoa",
+    storageBucket: "manualpalestrantesdevfestpoa.firebasestorage.app",
+    messagingSenderId: "795830941588",
+    appId: "1:795830941588:web:35b88ae0418afd61c98181"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const ADMIN_EMAILS = ['gdgpoars@gmail.com', 'gdgcaxiasdosul@gmail.com'];
+
+  window.__fb = {
+    async saveProgress(hash, sectionsMap){
+      try {
+        await setDoc(doc(db, 'progress', hash), {
+          sections: sectionsMap,
+          lastUpdated: serverTimestamp()
+        }, { merge: true });
+      } catch(e){ console.warn('Falha ao salvar progresso:', e); }
+    },
+    async loadProgress(hash){
+      try {
+        const snap = await getDoc(doc(db, 'progress', hash));
+        return snap.exists() ? snap.data() : null;
+      } catch(e){ console.warn('Falha ao carregar progresso:', e); return null; }
+    },
+    async recordLogin(hash){
+      try {
+        const ref = doc(db, 'progress', hash);
+        const snap = await getDoc(ref);
+        const payload = { lastLogin: serverTimestamp() };
+        if(!snap.exists() || !snap.data().firstLogin){
+          payload.firstLogin = serverTimestamp();
+        }
+        await setDoc(ref, payload, { merge: true });
+      } catch(e){ console.warn('Falha ao registrar login:', e); }
+    },
+    async addSessionTime(hash, seconds){
+      if(!seconds || seconds <= 0) return;
+      try {
+        await setDoc(doc(db, 'progress', hash), { totalSeconds: increment(seconds) }, { merge: true });
+      } catch(e){ console.warn('Falha ao registrar tempo de sessão:', e); }
+    },
+    async adminSignIn(email, password){
+      await signInWithEmailAndPassword(auth, email, password);
+    },
+    adminSignOut(){ return signOut(auth); },
+    async adminGetAll(){
+      const snap = await getDocs(collection(db, 'progress'));
+      const out = [];
+      snap.forEach(d => out.push({ id: d.id, ...d.data() }));
+      return out;
+    },
+    onAdminAuthChange(cb){
+      onAuthStateChanged(auth, (user) => {
+        const ok = !!(user && user.email && ADMIN_EMAILS.includes(user.email));
+        cb(ok, user);
+      });
+    }
+  };
+
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<div class="reading-progress-track" id="readingProgressTrack" style="display:none;">
+  <div class="reading-progress-fill" id="readingProgressFill"></div>
+</div>
+
+<button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="sidenav">☰ Menu</button>
+<div class="scrim" id="scrim"></div>
+
+<button class="back-to-top" id="backToTop" aria-label="Voltar ao topo" title="Voltar ao topo">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="shell">
+  <nav class="sidenav" id="sidenav" aria-label="Navegação do manual" style="display:none;">
+    <a href="#topo" class="brand">
+      <span class="mark">🧙</span>
+      <span class="word">Manual da Pessoa Palestrante<small>DevFest Porto Alegre 2026</small></span>
+    </a>
+
+    <div class="navgroup-label">Comece aqui</div>
+    <a class="navlink" href="#comece-aqui"><span class="em">👋</span> Início / Boas-vindas</a>
+    <a class="navlink" href="#sua-participacao"><span class="em">🎃</span> Sua participação</a>
+
+    <div class="navgroup-label">Prepare sua palestra</div>
+    <a class="navlink" href="#envio"><span class="em">💻</span> Envio da apresentação</a>
+    <a class="navlink" href="#tempo"><span class="em">⏱️</span> Tempo de palestra</a>
+    <a class="navlink" href="#perguntas"><span class="em">❓</span> Perguntas</a>
+    <a class="navlink" href="#live-coding"><span class="em">⌨️</span> Live coding</a>
+    <a class="navlink" href="#seguranca"><span class="em">🔐</span> Segurança dos dados</a>
+
+    <div class="navgroup-label">Branding &amp; divulgação</div>
+    <a class="navlink" href="#branding"><span class="em">🎨</span> Branding oficial</a>
+    <a class="navlink" href="#divulgacao"><span class="em">📣</span> Material de divulgação</a>
+    <a class="navlink" href="#boas-praticas"><span class="em">👀</span> Boas práticas visuais</a>
+    <a class="navlink" href="#empresa"><span class="em">🏢</span> Divulgar minha empresa?</a>
+
+    <div class="navgroup-label">Benefícios</div>
+    <a class="navlink" href="#beneficios"><span class="em">💜</span> O que você recebe</a>
+    <a class="navlink" href="#acompanhante"><span class="em">🎫</span> Acompanhante</a>
+    <a class="navlink" href="#cupom"><span class="em">🏷️</span> Cupom exclusivo</a>
+
+    <div class="navgroup-label">No dia do evento</div>
+    <a class="navlink" href="#chegada"><span class="em">⏰</span> Horário de chegada</a>
+    <a class="navlink" href="#mapa"><span class="em">🗺️</span> Mapa do evento</a>
+    <a class="navlink" href="#gravacao"><span class="em">🎥</span> Gravações</a>
+    <a class="navlink" href="#grade"><span class="em">🗓️</span> Sua trilha e grade</a>
+
+    <div class="navgroup-label">Comunidade</div>
+    <a class="navlink" href="#comunidade"><span class="em">🤝</span> Valores</a>
+    <a class="navlink" href="#acessibilidade"><span class="em">♿</span> Acessibilidade</a>
+    <a class="navlink" href="#conduta"><span class="em">📜</span> Código de conduta</a>
+
+    <div class="navgroup-label">Se precisar</div>
+    <a class="navlink" href="#plano-b"><span class="em">🚨</span> Plano B</a>
+    <a class="navlink" href="#checklist"><span class="em">✅</span> Checklist final</a>
+    <a class="navlink" href="#faq"><span class="em">💬</span> FAQ</a>
+    <a class="navlink" href="#contato"><span class="em">📬</span> Fale com a organização</a>
+    <a class="navlink" href="#admin-dashboard"><span class="em">📊</span> Painel de leitura (admin)</a>
+    <a class="navlink" href="#admin-tickets"><span class="em">🎫</span> Ingressos pendentes (admin)</a>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="topo" style="border-bottom:1px solid var(--line);">
+      <div class="wrap">
+        <div class="hero-kicker"><span class="dot"></span> GDG Porto Alegre &amp; GDG Caxias do Sul apresentam</div>
+        <h1 id="heroTitle">🧙 Manual da Pessoa Palestrante</h1>
+        <p class="lede" id="heroLede">Este manual é exclusivo para quem foi selecionada(o) para palestrar no DevFest Porto Alegre 2026. Entre com o e-mail que você usou na inscrição para acessar.</p>
+        <div class="hero-meta">
+          <div><strong>📅 31/10/2026</strong>Sábado</div>
+          <div><strong>📍 Faculdade Dom Bosco</strong>Porto Alegre/RS</div>
+          <div><strong>⏰ 09h às 18h</strong>Chegue com antecedência</div>
+        </div>
+
+        <div class="login-box" id="loginBox">
+          <div class="login-label">🔑 Acesso exclusivo — digite o e-mail da sua inscrição</div>
+          <div class="login-row">
+            <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="email">
+            <button class="btn btn-primary btn-small" id="loginBtn" type="button">Entrar</button>
+          </div>
+          <div class="login-msg" id="loginMsg"></div>
+        </div>
+
+        <div class="login-box logged" id="loggedBox" style="display:none;">
+          <div class="logged-row">
+            <span id="loggedAs"></span>
+            <button class="btn btn-ghost btn-small" id="logoutBtn" type="button">Trocar e-mail</button>
+          </div>
+          <div class="logged-progress" id="myProgressBlock" style="display:none;">
+            <div class="logged-progress-track">
+              <div class="logged-progress-fill" id="myProgressBarFill"></div>
+            </div>
+            <div class="logged-progress-label">
+              <span>📖 <strong id="myProgressPct">0%</strong> do manual lido</span>
+              <span id="myProgressCount" class="logged-progress-count">0 de 25 seções</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-row" id="ctaRow" style="display:none;">
+          <a href="#comece-aqui" class="btn btn-primary">Começar o manual</a>
+          <a href="#sua-participacao" class="btn btn-ghost">Ver minha programação</a>
+        </div>
+      </div>
+
+      <div class="journey-indicator" id="journeyIndicator" style="display:none;">
+        <p class="journey-text">Esse manual é importante — a ideia é que você leia <strong>100%</strong> dele. Conforme for percorrendo o conteúdo, seu progresso (lá em cima ↑) vai aumentando, e quando chegar a 100% vamos saber que você está <strong>101% preparada(o)</strong> para o grande dia! 🎉🧙</p>
+        <a href="#comece-aqui" class="scroll-arrow" data-tooltip="Role para baixo para começar a sua jornada" aria-label="Role para baixo para começar a sua jornada">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <div id="gatedContent" style="display:none;">
+    <!-- COMECE AQUI -->
+    <section id="comece-aqui">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">👋 Comece aqui</div>
+          <h2>🧭 Primeiros passos: como usar este manual</h2>
+        </div>
+
+        <div class="callout violet" style="margin-top:0;">
+          <p>👈 <strong>Todos os tópicos importantes estão no menu à esquerda</strong> (no celular, toque no botão <strong>☰ Menu</strong> no canto superior). É por ali que você navega entre prazos, benefícios, mapa do evento, plano B, FAQ e tudo mais — sem precisar rolar a página inteira procurando informação.</p>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>📖 Este é o manual do manual</h3>
+            <p>Sim, é meio "manual dentro do manual" mesmo 😅 — mas é importante: reserve alguns minutos para navegar por todos os tópicos do menu pelo menos uma vez antes do evento. É a forma mais rápida de garantir que você não vai ficar com nenhuma dúvida na hora H.</p>
+          </div>
+          <div class="card">
+            <h3>🗺️ Por onde eu começo?</h3>
+            <ul>
+              <li><strong>Sua participação</strong> — veja sua palestra, trilha, horário e duração</li>
+              <li><strong>Prepare sua palestra</strong> — prazos, checklist e boas práticas de slide</li>
+              <li><strong>No dia do evento</strong> — chegada, mapa e credenciamento</li>
+              <li><strong>FAQ</strong> — respostas rápidas para as dúvidas mais comuns</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-head" style="margin-top:56px;">
+          <div class="eyebrow">🧙 O que significa ser pessoa palestrante</div>
+          <h2>Muito mais do que subir ao palco</h2>
+        </div>
+        <p style="max-width:68ch;">Ser uma pessoa palestrante no DevFest Porto Alegre 2026 é muito mais do que subir ao palco por alguns minutos. Você foi convidada para compartilhar conhecimento, experiências e perspectivas com uma comunidade diversa de pessoas que estão aprendendo, criando, trabalhando e construindo suas carreiras em tecnologia.</p>
+        <p style="max-width:68ch;">No DevFest, acreditamos que conhecimento não precisa estar restrito a quem já sabe muito. Uma boa palestra pode ensinar uma nova tecnologia, provocar uma reflexão, apresentar um caminho diferente para resolver um problema ou simplesmente fazer alguém sair do evento com vontade de experimentar algo novo.</p>
+
+        <div class="quote-big">Você não está aqui apenas para falar. Está aqui para fazer parte da experiência.</div>
+
+        <div class="grid grid-2" style="margin-top:28px;">
+          <div class="card">
+            <h3>🎯 O que esperamos de você</h3>
+            <ul>
+              <li>Compartilhar conhecimento de forma clara, prática e acessível</li>
+              <li>Estar aberta à troca com quem está assistindo</li>
+              <li>Considerar diferentes níveis de experiência na plateia</li>
+              <li>Contribuir para um ambiente seguro, respeitoso e inclusivo</li>
+              <li>Respeitar o tempo da sua palestra e da programação</li>
+              <li>Participar da experiência do evento como um todo</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🗺️ Como usar este manual</h3>
+            <p>Use o menu para pular direto para o que você precisa: prazos de envio, tempo de palestra, benefícios, mapa do evento, plano B e FAQ.</p>
+            <p>Se uma dúvida sobre sua participação não estiver aqui, é só falar com a organização — veja como no fim da página.</p>
+            <a href="#checklist" class="btn btn-ghost btn-small">Ir para o checklist final →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUA PARTICIPAÇÃO -->
+    <section id="sua-participacao">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🎃 Sua participação</div>
+          <h2>O painel da sua palestra</h2>
+        </div>
+        <div class="panel" id="speakerPanel">
+          <div class="panel-top">
+            <div>
+              <div class="badge ok" id="panelStatus">🟢 Tudo certo!</div>
+            </div>
+            <span class="badge pending" id="panelHint">Faça login lá em cima para ver seus dados aqui</span>
+          </div>
+          <div id="panelTalksWrap">
+            <div class="panel-rows" data-talk-block>
+              <div class="panel-row"><div class="k">🎤 Palestra</div><div class="v" data-f="titulo">Em breve</div></div>
+              <div class="panel-row"><div class="k">🧙 Trilha</div><div class="v" data-f="trilha">Em breve</div></div>
+              <div class="panel-row"><div class="k">📍 Sala</div><div class="v">Em breve</div></div>
+              <div class="panel-row"><div class="k">⏰ Horário</div><div class="v" data-f="horario">Em breve</div></div>
+              <div class="panel-row"><div class="k">⏱️ Duração</div><div class="v" data-f="duracao">Em breve</div></div>
+              <div class="panel-row"><div class="k">🎬 Formato</div><div class="v" data-f="tipo">Em breve</div></div>
+            </div>
+          </div>
+          <div class="panel-links">
+            <a href="#grade" class="btn btn-ghost btn-small">Ver grade completa</a>
+            <a href="#divulgacao" class="btn btn-ghost btn-small">Arte da minha palestra</a>
+            <a href="#cupom" class="btn btn-ghost btn-small">Meu cupom</a>
+          </div>
+        </div>
+        <p style="margin-top:18px; font-size:13.5px;">Este painel é preenchido automaticamente com os dados da grade oficial assim que você faz login com seu e-mail lá no topo da página. O número da sala ainda está em definição pela organização.</p>
+      </div>
+    </section>
+
+    <!-- ENVIO DA APRESENTAÇÃO -->
+    <section id="envio">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">💻 Prepare sua palestra</div>
+          <h2>Envie sua apresentação com antecedência</h2>
+        </div>
+        <div class="grid grid-2">
+          <div>
+            <p>Enviar sua apresentação antes do evento ajuda a equipe técnica a testar tudo com calma — slides, vídeos, links, QR Codes — para que no seu horário só reste uma coisa para fazer: falar bem para a comunidade.</p>
+            <div class="panel-row" style="margin-bottom:12px;"><div class="k">📅 Prazo</div><div class="v">05/10/2026</div></div>
+            <div class="panel-row" style="margin-bottom:12px;"><div class="k">📩 Enviar para</div><div class="v">gdgpoars@gmail.com</div></div>
+            <div class="panel-row"><div class="k">👤 A/C</div><div class="v">Fernanda dos Santos</div></div>
+            <p style="margin-top:16px;">Formato preferencial: <strong style="color:var(--ink);">Google Apresentações</strong> (facilita ajustes de última hora e evita problemas de fonte/formatação).</p>
+          </div>
+          <div class="card">
+            <h3>✅ Checklist de envio</h3>
+            <ul class="checklist" data-checklist>
+              <li class="cl-item"><input type="checkbox" id="c1"><label for="c1">Slides finalizados</label></li>
+              <li class="cl-item"><input type="checkbox" id="c2"><label for="c2">Links funcionando</label></li>
+              <li class="cl-item"><input type="checkbox" id="c3"><label for="c3">Vídeos testados</label></li>
+              <li class="cl-item"><input type="checkbox" id="c4"><label for="c4">Áudios testados</label></li>
+              <li class="cl-item"><input type="checkbox" id="c5"><label for="c5">QR Codes funcionando</label></li>
+              <li class="cl-item"><input type="checkbox" id="c6"><label for="c6">Demo testada</label></li>
+              <li class="cl-item"><input type="checkbox" id="c7"><label for="c7">Dados sensíveis removidos</label></li>
+              <li class="cl-item"><input type="checkbox" id="c8"><label for="c8">Backup criado</label></li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout warn">
+          <p>⚠️ Se sua palestra depende de alguma coisa para funcionar — internet, um vídeo, uma API externa — tenha um plano B pronto.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPO -->
+    <section id="tempo">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">⏱️ Tempo de palestra</div>
+          <h2>Seu tempo é sagrado. Cronometrado do início ao fim.</h2>
+        </div>
+        <div class="big-time" id="bigTime">--<small id="bigTimeLabel">faça login para ver sua duração</small></div>
+        <p style="max-width:60ch;">Toda <strong style="color:var(--ink);">Palestra</strong> tem duração obrigatória de <strong style="color:var(--ink);">30 minutos</strong> — mesmo que o horário na grade pareça maior, aquele tempo extra é o respiro entre uma atividade e outra, não é tempo de fala. Já Workshops, Labs, Mentorias e Rodas de conversa têm um tempo personalizado próprio, sem espaço específico para perguntas (elas acontecem durante a própria atividade). Em todos os casos, o tempo é cronometrado pela pessoa responsável pela sala e acompanhado por você, com o cronômetro disponibilizado pela organização.</p>
+        <div class="clock-row">
+          <div class="clock-step"><div class="t">00:00</div><div class="l">Início da sua atividade</div></div>
+          <div class="clock-step"><div class="t" id="clockAlert">--:--</div><div class="l">Sinal de reta final</div></div>
+          <div class="clock-step"><div class="t" id="clockEnd">--:--</div><div class="l">Fim — hora de encerrar</div></div>
+        </div>
+        <p style="font-size:13.5px;">Não existem prorrogações "combinadas na hora": o controle de tempo protege a experiência de todas as pessoas palestrantes e participantes que vêm depois de você.</p>
+      </div>
+    </section>
+
+    <!-- PERGUNTAS -->
+    <section id="perguntas">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">❓ Perguntas</div>
+          <h2>Como funcionam as perguntas?</h2>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>🙋 No máximo 2 perguntas</h3>
+            <p>As perguntas acontecem depois do conteúdo da sua palestra, e são limitadas a no máximo duas.</p>
+          </div>
+          <div class="card">
+            <h3>⏱️ Por quê o limite?</h3>
+            <p>Esse limite existe para evitar atrasos nas próximas atividades e preservar a experiência de todas as pessoas palestrantes e participantes do dia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE CODING -->
+    <section id="live-coding">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">⌨️ Live coding</div>
+          <h2>Live coding é bem-vindo — com plano alternativo</h2>
+        </div>
+        <p>Adoramos ver código sendo escrito ao vivo, mas o tempo da sua atividade costuma ser curto para depender 100% de uma demo que pode falhar. Tenha sempre uma versão gravada ou um estado salvo do projeto para seguir em frente sem perder tempo.</p>
+        <div class="card">
+          <h3>✅ Checklist de live coding</h3>
+          <ul class="checklist" data-checklist>
+            <li class="cl-item"><input type="checkbox" id="lc1"><label for="lc1">Demo funcionando</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc2"><label for="lc2">Backup local</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc3"><label for="lc3">Projeto preparado</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc4"><label for="lc4">Dependências instaladas</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc5"><label for="lc5">Internet alternativa</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc6"><label for="lc6">Plano B definido</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc7"><label for="lc7">Credenciais removidas</label></li>
+            <li class="cl-item"><input type="checkbox" id="lc8"><label for="lc8">Código disponível, caso necessário</label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEGURANÇA -->
+    <section id="seguranca">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🔐 Segurança</div>
+          <h2>Antes de subir ao palco, proteja seus dados</h2>
+        </div>
+        <p>Nunca apresente publicamente: API keys, tokens, senhas, dados pessoais, dados de clientes, credenciais ou informações confidenciais.</p>
+        <div class="callout">
+          <p>👀 Se aparece no seu terminal, confira duas vezes antes de aparecer no telão.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANDING -->
+    <section id="branding">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🎨 Branding &amp; divulgação</div>
+          <h2>Branding de apresentações oficial dos DevFests</h2>
+        </div>
+        <p>O branding oficial dos DevFests é uma ótima opção para manter sua apresentação alinhada à identidade global do evento — cores, tipografia e componentes já pensados para slides técnicos.</p>
+        <a href="https://docs.google.com/presentation/d/1xspdc9b3AoVDQqietzwBllW4agG7rmg5bhH059NEbPU/edit?slide=id.g3ea767132af_0_0" target="_blank" rel="noopener" class="btn btn-primary" style="margin:8px 0 20px;">Acessar branding oficial ↗</a>
+        <div class="callout violet">
+          <p>Estamos disponibilizando o branding oficial dos DevFests do mundo mesmo sabendo que o branding do DevFest Porto Alegre deste ano é diferenciado — a real é que ainda não temos braços (nem tempo 😅) para montar um branding tão bem estruturado quanto esse que estamos divulgando. Por isso, caso queira, pode usar a <a href="https://drive.google.com/drive/folders/1fDXWr2K5m4zKtmYKEznR1G9xbHGDW-dW" target="_blank" rel="noopener">pasta de materiais de divulgação</a> e se inspirar no tema Halloween da nossa edição 🎃</p>
+        </div>
+        <p>E como as nossas trilhas seguem essa mesma vibe 🎃, também é super válido (e divertido) usar elementos do tema nos seus slides:</p>
+        <div class="grid grid-3">
+          <div class="card"><h3>🎨 Cores</h3><p>Tons de laranja abóbora e roxo, como no visual do evento.</p></div>
+          <div class="card"><h3>🕸️ Elementos visuais</h3><p>Teias, morcegos, abóboras e outros ícones de Halloween como apoio, não como poluição visual.</p></div>
+          <div class="card"><h3>🧙 Easter eggs</h3><p>Pequenas referências às trilhas ou ao tema "criar, proteger, escalonar" da edição.</p></div>
+        </div>
+        <p style="margin-top:16px;">Não é necessário transformar sua palestra em uma festa de Halloween — use o quanto fizer sentido para o seu conteúdo.</p>
+      </div>
+    </section>
+
+    <!-- DIVULGAÇÃO -->
+    <section id="divulgacao">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>📣 Material de divulgação</h2>
+        </div>
+        <p>Preparamos uma pasta com materiais para você divulgar sua participação no DevFest Porto Alegre 2026 🎃 — artes do evento, logos e outros materiais para usar nas suas redes e compartilhar com sua comunidade.</p>
+        <div class="cta-row" style="margin:18px 0 24px;">
+          <a href="https://drive.google.com/drive/folders/1fDXWr2K5m4zKtmYKEznR1G9xbHGDW-dW" target="_blank" rel="noopener" class="btn btn-primary">Acessar materiais</a>
+          <a href="https://drive.google.com/drive/folders/1R5XugZhhdMJa_PkCfremmO66oKpL9a1r" target="_blank" rel="noopener" class="btn btn-ghost">Acessar fotos 2025</a>
+        </div>
+        <div class="callout violet">
+          <p>🎨 Navegue pelos links do Canva logo abaixo, faça uma cópia do modelo que quiser usar e preencha com os seus dados. Depois é só salvar — pronto para postar! ✨</p>
+        </div>
+
+        <h3 style="font-family:'Space Grotesk'; font-size:18px; margin:32px 0 16px;">🎨 Cards prontos para suas redes</h3>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>📱 Cards de conteúdo — Feed</h3>
+            <p style="margin-bottom:14px;">Instagram Feed e LinkedIn</p>
+            <a href="https://canva.link/y45u290lznh6sn7" target="_blank" rel="noopener" class="btn btn-ghost btn-small">Abrir no Canva ↗</a>
+          </div>
+          <div class="card">
+            <h3>📱 Cards de conteúdo — Stories</h3>
+            <p style="margin-bottom:14px;">Instagram Stories</p>
+            <a href="https://canva.link/qzxt9zw5rl1a2ff" target="_blank" rel="noopener" class="btn btn-ghost btn-small">Abrir no Canva ↗</a>
+          </div>
+          <div class="card">
+            <h3>🧙 Cards das trilhas — Feed</h3>
+            <p style="margin-bottom:14px;">Instagram Feed e LinkedIn</p>
+            <a href="https://canva.link/fp1kwen8dgmogpb" target="_blank" rel="noopener" class="btn btn-ghost btn-small">Abrir no Canva ↗</a>
+          </div>
+        </div>
+
+        <p style="margin-top:28px;">Ajude a gente a espalhar o DevFest por aí e chamar mais gente para viver essa experiência com a comunidade 💜</p>
+      </div>
+    </section>
+
+    <!-- BOAS PRÁTICAS VISUAIS -->
+    <section id="boas-praticas">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">👀 Prepare sua palestra</div>
+          <h2>Boas práticas visuais na apresentação</h2>
+          <p>Sua apresentação não precisa ser uma obra-prima de design. Ela precisa ser fácil de acompanhar.</p>
+        </div>
+        <p style="max-width:70ch;">Durante uma palestra, o público precisa conseguir ouvir você, entender o que está na tela e acompanhar seu raciocínio — tudo ao mesmo tempo. Algumas dicas simples ajudam bastante:</p>
+
+        <div class="grid grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>✂️ Menos texto, mais clareza</h3>
+            <p>Evite transformar o slide em um documento. Se você precisa de vários parágrafos para explicar uma ideia, provavelmente vale dividir em mais de um slide. O slide apoia sua fala. Ele não precisa substituir você.</p>
+          </div>
+          <div class="card">
+            <h3>🎯 Uma ideia por vez</h3>
+            <p>Sempre que possível, trabalhe uma ideia principal por slide. Pergunte: "se a pessoa lembrar de apenas uma coisa deste slide, o que eu quero que seja?" Se a resposta for "várias coisas", talvez seja hora de dividir. 👀</p>
+          </div>
+          <div class="card">
+            <h3>🔠 Texto grande e legível</h3>
+            <p>Lembre que seu slide pode estar sendo visto do fundo de uma sala. Prefira títulos grandes, textos curtos, fontes fáceis de ler, bom espaçamento e contraste suficiente. Se você precisa dar zoom para ler seu próprio slide, provavelmente o público também precisará. 😅</p>
+          </div>
+          <div class="card">
+            <h3>🎨 Elementos visuais com propósito</h3>
+            <p>Imagens, gráficos, diagramas, ilustrações e animações podem ajudar a explicar uma ideia. Mas não precisam estar em todos os slides. Decoração não deve competir com informação.</p>
+          </div>
+          <div class="card">
+            <h3>📊 Gráficos simples</h3>
+            <p>Se você precisa de 30 segundos para explicar como interpretar um gráfico, simplifique. Destaque o dado ou conclusão mais importante e deixe o restante em segundo plano.</p>
+          </div>
+          <div class="card">
+            <h3>💻 Código também precisa respirar</h3>
+            <p>Para apresentações técnicas: evite mostrar arquivos inteiros, destaque apenas o trecho importante, aumente o tamanho da fonte, use exemplos pequenos e explique o que a pessoa deve observar. Não faça o público procurar o código importante em 40 linhas.</p>
+          </div>
+          <div class="card">
+            <h3>🌈 Cuidado com as cores</h3>
+            <p>Use cores para criar hierarquia e destacar informações, não para colorir tudo. E lembre: não use apenas cor para transmitir uma informação importante — isso também ajuda pessoas com diferentes condições de visão.</p>
+          </div>
+          <div class="card">
+            <h3>🎃 E o Halloween?</h3>
+            <p>Você pode brincar com a identidade do DevFest Porto Alegre 2026! Uma aranha aqui, um easter egg ali, elementos das trilhas, referências visuais... Mas lembre: Halloween é o tempero. O conteúdo continua sendo o prato principal. 🧙‍♀️</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:28px;">
+          <h3>✅ Checklist rápido</h3>
+          <p style="margin-bottom:12px;">Antes de enviar seus slides, pergunte:</p>
+          <ul>
+            <li>Consigo entender a ideia principal de cada slide rapidamente?</li>
+            <li>O texto pode ser reduzido?</li>
+            <li>A fonte está grande o suficiente?</li>
+            <li>Existe contraste suficiente?</li>
+            <li>Os elementos visuais ajudam a explicar?</li>
+            <li>Meus gráficos são fáceis de entender?</li>
+            <li>Meu código está legível?</li>
+            <li>Os slides funcionam mesmo sem animações?</li>
+            <li>Não estou tentando colocar tudo em um único slide?</li>
+          </ul>
+          <p style="margin-bottom:0;">Se a resposta for sim para a maioria: ótimo. Agora deixe os slides descansarem e vá preparar sua fala. 🎤</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIVULGAÇÃO DE EMPRESA -->
+    <section id="empresa">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🏢 Durante a palestra</div>
+          <h2>Posso divulgar minha empresa durante a palestra?</h2>
+        </div>
+        <p>Pode falar sobre onde você trabalha, sua experiência profissional ou projetos dos quais participa, claro! 💜</p>
+        <p>O que pedimos é que a palestra não seja utilizada como espaço de publicidade, venda ou promoção comercial da sua empresa, produto ou serviço. O DevFest possui patrocinadores e parceiros que apoiam financeiramente a realização do evento e possuem espaços e contrapartidas específicas para divulgação. Por isso, precisamos preservar esses espaços e garantir uma experiência justa para quem investe no evento.</p>
+
+        <div class="grid grid-2" style="margin-top:20px;">
+          <div class="card">
+            <h3>🚫 Evite durante sua apresentação</h3>
+            <ul>
+              <li>Chamadas para compra de produtos ou serviços</li>
+              <li>Divulgação comercial da empresa</li>
+              <li>Ofertas, promoções ou cupons comerciais</li>
+              <li>Apresentações institucionais sem relação com o conteúdo</li>
+              <li>Transformar parte da palestra em um pitch de vendas</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>✅ O que pode</h3>
+            <p style="margin-bottom:10px;">Se fizer sentido para o conteúdo, você pode mencionar:</p>
+            <ul>
+              <li>Sua empresa</li>
+              <li>Seu cargo</li>
+              <li>Projetos em que trabalhou</li>
+              <li>Cases profissionais</li>
+              <li>Ferramentas ou tecnologias utilizadas no trabalho</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quote-big" style="font-size:clamp(18px,2.2vw,24px); max-width:34ch;">Sua experiência pode fazer parte da história. A palestra não pode virar um comercial. 😅</div>
+        <p>Se você tiver alguma dúvida sobre uma divulgação específica que gostaria de fazer, fale com a organização antes do evento.</p>
+      </div>
+    </section>
+
+    <!-- BENEFÍCIOS -->
+    <section id="beneficios">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">💜 Benefícios</div>
+          <h2>O que você recebe por palestrar no DevFestPoa26</h2>
+        </div>
+        <div class="grid grid-3">
+          <div class="card"><h3>🎤 Crachá Speaker</h3><p>Entregue no seu credenciamento, no dia do evento.</p></div>
+          <div class="card"><h3>🎁 Welcome Kit</h3><p>Também entregue no credenciamento, junto do seu crachá.</p></div>
+          <div class="card"><h3>🎫 Ingresso acompanhante</h3><p>Um ingresso cortesia para levar alguém especial. Veja os detalhes abaixo.</p></div>
+          <div class="card"><h3>🏷️ Cupom exclusivo</h3><p>Um cupom com seu nome para compartilhar com sua comunidade.</p></div>
+          <div class="card"><h3>📸 Registros do evento</h3><p>Fotos e vídeos feitos pelo time de mídia voluntário, incluindo alguns takes da sua palestra.</p></div>
+          <div class="card"><h3>📄 Certificado diferenciado</h3><p>Considera também +10h de preparação. Veja os detalhes abaixo. 💜</p></div>
+        </div>
+
+        <div class="card" style="margin-top:24px;">
+          <h3>📄 Certificado</h3>
+          <p>Você não vai receber apenas um certificado de participação como pessoa palestrante. 💜</p>
+          <p>Preparamos um certificado diferenciado, considerando também <strong style="color:var(--ink);">+10 horas dedicadas</strong> à preparação e montagem da sua apresentação.</p>
+          <p>Afinal, sabemos que sua participação não começa quando você sobe ao palco. Antes dos minutos de conteúdo, existe todo o tempo dedicado a pesquisar, organizar ideias, preparar slides, testar aquela demo, revisar o conteúdo e deixar tudo pronto.</p>
+          <p>E, claro, esperamos que você esteja com a gente durante todo o evento — hein? 👀🎃</p>
+          <p style="margin-bottom:0;">Queremos reconhecer não apenas os minutos no palco, mas também todo o trabalho que existe por trás deles.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACOMPANHANTE -->
+    <section id="acompanhante">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>🎫 Quer trazer alguém com você?</h2>
+        </div>
+        <p>Como forma de cortesia e agradecimento pela sua participação como palestrante no DevFest Porto Alegre, disponibilizamos <strong style="color:var(--ink);">01 ingresso cortesia para um acompanhante.</strong></p>
+        <p>Infelizmente, neste momento não conseguimos arcar com os custos de deslocamento, hospedagem ou alimentação de acompanhantes, mas queremos garantir que você possa trazer alguém especial para viver essa experiência com você. 💜</p>
+        <div class="timeline">
+          <div class="tl-item"><h4>Período para envio dos dados</h4><span>01/09 a 18/09</span></div>
+          <div class="tl-item"><h4>Envio dos ingressos</h4><span>Entre 21/09 e 25/09</span></div>
+        </div>
+        <div class="callout">
+          <p>😂 Não se preocupe: o ingresso do seu acompanhante está garantido! Só pedimos um prazo maior para o envio porque, se estivermos atolados de tarefas por aqui, podemos precisar de alguns dias extras.</p>
+        </div>
+        <a href="https://forms.gle/5ASdg51NvwByYkAz6" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:8px;">Preencher formulário do acompanhante</a>
+        <p style="margin-top:14px; font-size:13.5px;">Preencha os dados com atenção para que possamos emitir o ingresso corretamente. Nos vemos no DevFest 🧙‍♀️🎃</p>
+      </div>
+    </section>
+
+    <!-- CUPOM -->
+    <section id="cupom">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>🏷️ Seu cupom exclusivo de palestrante</h2>
+        </div>
+        <p>Preparamos um cupom de desconto exclusivo para você compartilhar com sua comunidade, amigos e colegas 💜. Seu cupom é formado pelo seu primeiro nome + 10.</p>
+        <div class="coupon-box">
+          <div>
+            <div style="font-size:13px;color:var(--ink-faint);margin-bottom:6px;">Exemplo</div>
+            <div class="coupon-code">FERNANDA10</div>
+          </div>
+          <span class="badge">Pode compartilhar à vontade</span>
+        </div>
+        <div>
+          <div class="coupon-input-row" style="display:none;">
+            <input type="text" id="couponName" placeholder="Seu primeiro nome" maxlength="20">
+            <button class="btn btn-ghost btn-small" id="couponGenBtn" type="button">Gerar meu cupom</button>
+          </div>
+          <button class="btn btn-primary btn-small" id="couponCopyBtn" type="button" style="display:none; margin-top:16px;">Copiar meu cupom</button>
+          <div id="couponResult" style="margin-top:14px; display:none;">
+            <div style="font-size:13px;color:var(--ink-faint);margin-bottom:6px;">Seu cupom</div>
+            <div class="coupon-code" id="couponResultCode"></div>
+          </div>
+        </div>
+        <p style="margin-top:20px; font-size:13.5px;">Ajude sua galera a garantir o ingresso para o DevFest Porto Alegre 🎃👻 — pode compartilhar com comunidade, amigos, colegas, seguidores e empresas.</p>
+      </div>
+    </section>
+
+    <!-- CHEGADA -->
+    <section id="chegada">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🎬 No dia do evento</div>
+          <h2>Que horas devo chegar?</h2>
+        </div>
+        <p>Pedimos que você esteja no evento obrigatoriamente entre <strong style="color:var(--ink);">1 hora e 45 minutos antes</strong> do seu conteúdo. Esse tempo é importante para fazermos seu credenciamento, alinharmos os últimos detalhes e garantir que tudo esteja pronto para a sua participação 🎤</p>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>🕰️ Por que esse tempo?</h3>
+            <ul>
+              <li>Credenciamento</li>
+              <li>Alinhamentos com a equipe</li>
+              <li>Teste técnico</li>
+              <li>Localização da sala</li>
+              <li>Últimos ajustes</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>💜 Um pedido especial</h3>
+            <p>Esteja conosco durante todo o evento! O DevFest é muito mais do que o momento da sua palestra — queremos você junto da comunidade, acompanhando outros conteúdos, trocando ideias, fazendo networking e vivendo essa experiência com a gente 👻✨</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPA -->
+    <section id="mapa">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>🗺️ Onde fica cada coisa?</h2>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>🏢 Térreo</h3>
+            <ul>
+              <li>🪪 Credenciamento</li>
+              <li>🎤 Auditório</li>
+              <li>🎃 Pátio</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🏢 4º andar</h3>
+            <ul>
+              <li>🧙‍♀️ Salas das trilhas — <span class="badge pending">números em breve</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <h3>🥨 Sala de Staff</h3>
+          <p>4º andar, sala 405. E sim, teremos comidinhas gostosas por lá 💜</p>
+        </div>
+        <div class="grid grid-2" style="margin-top:20px;">
+          <div class="card">
+            <h3>🎟️ Seu credenciamento</h3>
+            <p>Você fará o check-in normalmente. Depois receberá seu crachá de Speaker 🎤 e seu Welcome Kit 🎁.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRAVAÇÃO -->
+    <section id="gravacao">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>🎥 Posso gravar a minha palestra?</h2>
+        </div>
+        <p>Sabemos que dá vontade de registrar aquele momento — e entendemos totalmente! Mas, para manter o evento organizado e respeitar os horários da programação, não será permitido que palestrantes façam gravações próprias durante suas palestras.</p>
+        <p>Temos um intervalo bem curto entre os conteúdos e, na prática, só o processo de montar câmera, ajustar enquadramento, conectar microfone e organizar o equipamento já pode comprometer o tempo de transição. Se cada pessoa fizer isso por conta própria, perdemos previsibilidade e podemos acabar atrasando toda a programação ⏱️</p>
+        <p>Além disso, o registro de imagem e vídeo durante o evento envolve o consentimento dos participantes. A autorização para captação e uso dessas imagens é gerenciada pela organização do evento e pelas comunidades organizadoras, não sendo automaticamente extensível aos equipamentos ou gravações particulares de cada palestrante.</p>
+        <div class="callout">
+          <p><strong>📸 Mas temos uma boa notícia!</strong> Estamos montando um time de mídia voluntário especialmente para o evento, que ficará responsável por registrar momentos das palestras, fotos e alguns takes dos palestrantes. Depois do evento, vamos disponibilizar esse material para vocês — assim você consegue registros legais da sua participação sem se preocupar com câmera, microfone, enquadramento ou com o relógio correndo 😌🎃</p>
+        </div>
+        <p style="font-size:13.5px;">Tem uma necessidade específica de gravação ou registro profissional? Fale com a organização antes do evento pelo e-mail oficial.</p>
+      </div>
+    </section>
+
+    <!-- GRADE -->
+    <section id="grade">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>🧙 Confira sua trilha e a grade completa</h2>
+        </div>
+        <p>Programação, trilhas, horários e salas ficam sempre atualizados no site oficial do evento.</p>
+        <a href="https://devfestportoalegre.com.br" target="_blank" rel="noopener" class="btn btn-primary">Ver grade completa ↗</a>
+      </div>
+    </section>
+
+    <!-- COMUNIDADE / VALORES -->
+    <section id="comunidade">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🤝 Comunidade</div>
+          <h2>Os valores que guiam o DevFestPoa26</h2>
+        </div>
+        <div class="grid grid-3">
+          <div class="card"><h3>🤝 Comunidade acima do ego</h3><p>Nenhuma pessoa faz um evento como o DevFest sozinha.</p></div>
+          <div class="card"><h3>🌈 Inclusão intencional</h3><p>Diversidade não acontece por acaso.</p></div>
+          <div class="card"><h3>🚀 Compartilhar para crescer</h3><p>Conhecimento compartilhado gera conhecimento novo.</p></div>
+          <div class="card"><h3>✨ Excelência</h3><p>Somos voluntários, mas levamos a experiência a sério.</p></div>
+          <div class="card"><h3>🔎 Transparência</h3><p>Somos claros sobre decisões, prazos, limitações e processos.</p></div>
+          <div class="card"><h3>💜 Respeito sempre</h3><p>Discordar faz parte da comunidade. Desrespeitar, não.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACESSIBILIDADE -->
+    <section id="acessibilidade">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>♿ Acessibilidade na sua apresentação</h2>
+        </div>
+        <p>Algumas recomendações simples fazem sua palestra chegar melhor para mais gente:</p>
+        <div class="grid grid-2">
+          <ul style="margin:0;">
+            <li>Use contraste adequado entre texto e fundo</li>
+            <li>Prefira tamanho de fonte legível de longe</li>
+            <li>Descreva imagens importantes em voz alta</li>
+            <li>Use legendas em vídeos, quando possível</li>
+          </ul>
+          <ul style="margin:0;">
+            <li>Evite excesso de informação por slide</li>
+            <li>Explique siglas na primeira vez que aparecerem</li>
+            <li>Use linguagem acessível</li>
+            <li>Não dependa exclusivamente de elementos visuais para explicar algo</li>
+          </ul>
+        </div>
+        <p style="margin-top:16px;">Tem uma necessidade específica de acessibilidade, sua ou de alguém da plateia? Fale com a organização pelo e-mail oficial.</p>
+      </div>
+    </section>
+
+    <!-- CÓDIGO DE CONDUTA -->
+    <section id="conduta">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>📜 Código de Conduta</h2>
+        </div>
+        <p>O DevFestPoa26 é um espaço de respeito, diversidade e segurança para todas as pessoas — palestrantes, participantes, voluntárias e patrocinadoras.</p>
+        <a href="https://www.devfestportoalegre.com.br/codigo-de-conduta" target="_blank" rel="noopener" class="btn btn-primary">Ler o Código de Conduta completo ↗</a>
+      </div>
+    </section>
+
+    <!-- PLANO B -->
+    <section id="plano-b">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🚨 Se algo der errado</div>
+          <h2>E se der ruim?</h2>
+          <p>Porque provavelmente alguma coisa vai dar 😂</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card"><h3>🎥 Meu vídeo não funciona</h3><p>Tenha uma versão alternativa preparada e um backup local, caso a internet oscile.</p></div>
+          <div class="card"><h3>🔥 Minha demo quebrou</h3><p>Não gaste todo o seu tempo tentando consertá-la. Vá para o plano B.</p></div>
+          <div class="card"><h3>⏰ Estou atrasada</h3><p>Avise imediatamente a organização.</p></div>
+          <div class="card"><h3>🤒 Não poderei comparecer</h3><p>Entre em contato imediatamente pelo e-mail oficial.</p></div>
+          <div class="card"><h3>📝 Preciso de uma alteração após o prazo do dia 05/10</h3><p>Formalize a solicitação por e-mail para gdgpoars@gmail.com (A/C Fernanda dos Santos) e vamos avaliar com você.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKLIST FINAL -->
+    <section id="checklist">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">✅ Checklist final</div>
+          <h2>Seu roteiro, do preparo ao pós-evento</h2>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-num" id="progressNum">0/24 concluído</div>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>🗓️ 7 dias antes</h3>
+            <ul class="checklist" data-checklist>
+              <li class="cl-item"><input type="checkbox" id="f1"><label for="f1">Apresentação finalizada</label></li>
+              <li class="cl-item"><input type="checkbox" id="f2"><label for="f2">Backup feito</label></li>
+              <li class="cl-item"><input type="checkbox" id="f3"><label for="f3">Demo testada</label></li>
+              <li class="cl-item"><input type="checkbox" id="f4"><label for="f4">Vídeos baixados</label></li>
+              <li class="cl-item"><input type="checkbox" id="f5"><label for="f5">Links revisados</label></li>
+              <li class="cl-item"><input type="checkbox" id="f6"><label for="f6">QR Codes testados</label></li>
+              <li class="cl-item"><input type="checkbox" id="f7"><label for="f7">Dados sensíveis removidos</label></li>
+              <li class="cl-item"><input type="checkbox" id="f8"><label for="f8">Horário conferido</label></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🎤 No dia</h3>
+            <ul class="checklist" data-checklist>
+              <li class="cl-item"><input type="checkbox" id="f9"><label for="f9">Cheguei com antecedência</label></li>
+              <li class="cl-item"><input type="checkbox" id="f10"><label for="f10">Fiz credenciamento</label></li>
+              <li class="cl-item"><input type="checkbox" id="f11"><label for="f11">Peguei meu crachá Speaker</label></li>
+              <li class="cl-item"><input type="checkbox" id="f12"><label for="f12">Peguei meu Welcome Kit</label></li>
+              <li class="cl-item"><input type="checkbox" id="f13"><label for="f13">Encontrei a equipe</label></li>
+              <li class="cl-item"><input type="checkbox" id="f14"><label for="f14">Testei apresentação</label></li>
+              <li class="cl-item"><input type="checkbox" id="f15"><label for="f15">Testei áudio/vídeo</label></li>
+              <li class="cl-item"><input type="checkbox" id="f16"><label for="f16">Conheci a pessoa responsável pela sala</label></li>
+              <li class="cl-item"><input type="checkbox" id="f17"><label for="f17">Estou pronta para subir ao palco 🎤</label></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>💜 Depois</h3>
+            <ul class="checklist" data-checklist>
+              <li class="cl-item"><input type="checkbox" id="f18"><label for="f18">Conferir registros</label></li>
+              <li class="cl-item"><input type="checkbox" id="f19"><label for="f19">Compartilhar fotos</label></li>
+              <li class="cl-item"><input type="checkbox" id="f20"><label for="f20">Agradecer à comunidade</label></li>
+              <li class="cl-item"><input type="checkbox" id="f21"><label for="f21">Dar feedback sobre o evento</label></li>
+            </ul>
+          </div>
+        </div>
+        <p style="font-size:13px; margin-top:18px;">Seu progresso fica salvo só nesta sessão do navegador — se recarregar a página, os checkboxes reiniciam.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">💬 FAQ</div>
+          <h2>Perguntas frequentes</h2>
+        </div>
+        <div id="faqList">
+          <details class="faq"><summary>Posso alterar minha palestra?<span class="plus">+</span></summary><div class="faq-a">Você tem até o dia 05/10 para enviar sua palestra. Caso após isso ainda precise de uma alteração, formalize por e-mail para gdgpoars@gmail.com (A/C Fernanda dos Santos) e organizaremos.</div></details>
+          <details class="faq"><summary>Posso alterar o título?<span class="plus">+</span></summary><div class="faq-a">Como a grade oficial já está divulgada, o ideal é manter o título que foi enviado.</div></details>
+          <details class="faq"><summary>Até quando posso enviar os slides?<span class="plus">+</span></summary><div class="faq-a">O prazo é 05/10/2026, enviando para gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
+          <details class="faq"><summary>Posso usar Google Apresentações?<span class="plus">+</span></summary><div class="faq-a">Sim — é, inclusive, o formato preferencial para o envio da sua apresentação.</div></details>
+          <details class="faq"><summary>Posso usar meu próprio notebook?<span class="plus">+</span></summary><div class="faq-a">Por motivos de melhor funcionamento da sala e do tempo entre atividades, o notebook será da organização, fixo em cada sala/trilha.</div></details>
+          <details class="faq"><summary>Haverá internet?<span class="plus">+</span></summary><div class="faq-a">A faculdade dispõe de internet. Mas recomendamos que tenha o seu 5G funcionando como backup.</div></details>
+          <details class="faq"><summary>Posso fazer live coding?<span class="plus">+</span></summary><div class="faq-a">Sim, live coding é bem-vindo — desde que você tenha um plano B pronto caso algo não funcione ao vivo.</div></details>
+          <details class="faq"><summary>Posso usar vídeos?<span class="plus">+</span></summary><div class="faq-a">Sim, desde que estejam testados com antecedência e enviados junto com a sua apresentação.</div></details>
+          <details class="faq"><summary>Posso usar QR Code?<span class="plus">+</span></summary><div class="faq-a">Sim, só confira se está funcionando antes de enviar sua apresentação.</div></details>
+          <details class="faq"><summary>Posso distribuir materiais?<span class="plus">+</span></summary><div class="faq-a">Consulte a viabilidade pelo e-mail gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
+          <details class="faq"><summary>Posso divulgar minha empresa?<span class="plus">+</span></summary><div class="faq-a">Pode, com moderação — a palestra não pode virar espaço de publicidade ou pitch de vendas. Veja o tópico completo em <a href="#empresa">Divulgar minha empresa?</a> no menu.</div></details>
+          <details class="faq"><summary>Posso gravar minha palestra?<span class="plus">+</span></summary><div class="faq-a">Não é permitido fazer gravações próprias durante a sua palestra. O time de mídia do evento registra os conteúdos e o material é disponibilizado depois.</div></details>
+          <details class="faq"><summary>Posso levar acompanhante?<span class="plus">+</span></summary><div class="faq-a">Sim, você tem direito a 1 ingresso cortesia para um acompanhante. Preencha o formulário na seção Benefícios.</div></details>
+          <details class="faq"><summary>Quantos acompanhantes posso levar?<span class="plus">+</span></summary><div class="faq-a">O benefício garante 1 ingresso cortesia por palestrante.</div></details>
+          <details class="faq"><summary>Qual horário preciso chegar?<span class="plus">+</span></summary><div class="faq-a">Pelo menos 1 hora e 45 minutos antes do horário da sua palestra.</div></details>
+          <details class="faq"><summary>Onde fica minha sala?<span class="plus">+</span></summary><div class="faq-a">As salas de trilha ficam no 4º andar. O número da sua sala específica aparece na seção <a href="#sua-participacao">Sua participação</a> depois que você faz login com seu e-mail.</div></details>
+          <details class="faq"><summary>Onde fica o credenciamento?<span class="plus">+</span></summary><div class="faq-a">No térreo da Faculdade Dom Bosco.</div></details>
+          <details class="faq"><summary>Onde fica a Sala de Staff?<span class="plus">+</span></summary><div class="faq-a">4º andar, sala 405.</div></details>
+          <details class="faq"><summary>Como funciona o controle de tempo?<span class="plus">+</span></summary><div class="faq-a">Cada atividade prática — workshop, lab, mentoria ou roda de conversa — tem sua própria duração, definida na grade oficial. Já as palestras têm, em geral e obrigatoriamente, 30 minutos. Em todos os casos, o tempo é cronometrado pela pessoa responsável pela sala, com o apoio da própria pessoa palestrante para manter o ritmo.</div></details>
+          <details class="faq"><summary>Quantas perguntas serão feitas?<span class="plus">+</span></summary><div class="faq-a">No máximo 2 perguntas, sempre depois do conteúdo da palestra.</div></details>
+          <details class="faq"><summary>Haverá certificado?<span class="plus">+</span></summary><div class="faq-a">Sim, e não é só o certificado padrão de participação: ele também considera +10 horas dedicadas à preparação da sua apresentação. Veja os detalhes na seção Benefícios.</div></details>
+          <details class="faq"><summary>Como receberei as fotos?<span class="plus">+</span></summary><div class="faq-a">Todo o material será disponibilizado pós-evento, com link enviado por e-mail.</div></details>
+          <details class="faq"><summary>Quem devo procurar se tiver um problema?<span class="plus">+</span></summary><div class="faq-a">No dia do evento, procure a pessoa responsável pela sua sala. Para qualquer outra solicitação, escreva para gdgpoars@gmail.com.</div></details>
+          <details class="faq"><summary>O que faço se não puder comparecer?<span class="plus">+</span></summary><div class="faq-a">Entre em contato imediatamente pelo e-mail oficial: gdgpoars@gmail.com (A/C Fernanda dos Santos).</div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">📬 Fale com a organização</div>
+          <h2>Precisa falar com a gente?</h2>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>📧 E-mail oficial</h3>
+            <p><a href="mailto:gdgpoars@gmail.com">gdgpoars@gmail.com</a><br>A/C Fernanda dos Santos</p>
+            <p>Toda solicitação, alteração ou pedido relacionado à sua participação como palestrante precisa ser formalizado por e-mail: alteração de palestra, mudança de título, necessidades técnicas, acessibilidade, materiais, alteração de horário, impossibilidade de comparecimento, acompanhante ou solicitações especiais.</p>
+          </div>
+          <div class="card">
+            <h3>📱 WhatsApp</h3>
+            <p>O WhatsApp pessoal da Fe está disponível para dúvidas rápidas e situações urgentes.</p>
+            <a href="https://wa.me/5554991299262" target="_blank" rel="noopener" class="btn btn-primary btn-small" style="margin-top:4px;">Chamar no WhatsApp</a>
+            <div class="callout" style="margin-top:16px;">
+              <p>WhatsApp é ótimo para "Fe, preciso falar contigo rapidinho". E-mail é onde fazemos a magia administrativa acontecer 🪄</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAINEL ADMIN DE PROGRESSO -->
+    <section id="admin-dashboard">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">📊 Restrito à organização</div>
+          <h2>Painel de leitura das pessoas palestrantes</h2>
+          <p>Esse painel mostra, para cada pessoa que já acessou o manual, quanto do conteúdo ela já leu. O acesso exige login separado (e-mail + senha do Firebase) — diferente do login rápido usado lá em cima.</p>
+        </div>
+
+        <div id="adminLoginArea">
+          <div class="admin-login-form">
+            <input type="email" id="adminEmail" placeholder="e-mail do admin" autocomplete="username">
+            <input type="password" id="adminPassword" placeholder="senha" autocomplete="current-password">
+            <button class="btn btn-primary btn-small" id="adminSignInBtn" type="button">Entrar no painel</button>
+          </div>
+          <p id="adminLoginMsg" style="font-size:13px; margin-top:10px;"></p>
+        </div>
+
+        <div id="adminDashboardArea" style="display:none;">
+          <div class="panel-links" style="margin-bottom:20px;">
+            <span class="badge ok" id="adminWhoAmI"></span>
+            <button class="btn btn-ghost btn-small" id="adminSignOutBtn" type="button">Sair do painel</button>
+            <button class="btn btn-ghost btn-small" id="adminRefreshBtn" type="button">🔄 Atualizar</button>
+          </div>
+          <div id="adminTableWrap">
+            <p style="font-size:13.5px;">Carregando dados…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INGRESSOS NÃO RETIRADOS (admin) -->
+    <section id="admin-tickets">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">🎫 Restrito à organização</div>
+          <h2>Ingressos não retirados</h2>
+          <p>Lista de pessoas que ainda não retiraram o ingresso, para cobrança direta. Faça login no <a href="#admin-dashboard">painel acima</a> primeiro — o acesso é o mesmo.</p>
+        </div>
+
+        <div id="adminTicketsLocked">
+          <div class="callout warn"><p>🔒 Faça login no painel de leitura (seção anterior) para ver esta lista.</p></div>
+        </div>
+
+        <div id="adminTicketsArea" style="display:none;">
+          <div class="panel-links" style="margin-bottom:18px;">
+            <button class="btn btn-ghost btn-small" id="copyMsgBtn" type="button">📋 Copiar mensagem padrão</button>
+          </div>
+          <div id="ticketsTableWrap"></div>
+          <p style="font-size:12.5px; margin-top:14px;">Números de WhatsApp precisam ser cadastrados manualmente — pessoas sem número aparecem marcadas para envio por e-mail.</p>
+        </div>
+      </div>
+    </section>
+
+    </div><!-- /gatedContent -->
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>🧙 Manual da Pessoa Palestrante · DevFest Porto Alegre 2026</p>
+    <p>31 de outubro de 2026 · Faculdade Dom Bosco, Porto Alegre/RS</p>
+    <p>Realização: GDG Porto Alegre &amp; GDG Caxias do Sul</p>
+  </div>
+</footer>
+
+<script>
+  // botão voltar ao topo
+  const backToTopBtn = document.getElementById('backToTop');
+  if(backToTopBtn){
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('show', window.scrollY > 500);
+    }, { passive: true });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // mobile nav
+  const menuToggle = document.getElementById('menuToggle');
+  const sidenav = document.getElementById('sidenav');
+  const scrim = document.getElementById('scrim');
+  function closeNav(){ sidenav.classList.remove('open'); scrim.classList.remove('show'); menuToggle.setAttribute('aria-expanded','false'); }
+  function openNav(){ sidenav.classList.add('open'); scrim.classList.add('show'); menuToggle.setAttribute('aria-expanded','true'); }
+  menuToggle.addEventListener('click', () => sidenav.classList.contains('open') ? closeNav() : openNav());
+  scrim.addEventListener('click', closeNav);
+  sidenav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  // scrollspy
+  const navLinks = Array.from(document.querySelectorAll('.navlink'));
+  const sections = navLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const id = '#' + entry.target.id;
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => io.observe(s));
+
+  // final checklist progress (only the #checklist section groups)
+  const finalItems = document.querySelectorAll('#checklist .cl-item input[type=checkbox]');
+  const progressFill = document.getElementById('progressFill');
+  const progressNum = document.getElementById('progressNum');
+  function updateProgress(){
+    const total = finalItems.length;
+    const done = Array.from(finalItems).filter(i => i.checked).length;
+    progressFill.style.width = (total ? (done/total*100) : 0) + '%';
+    progressNum.textContent = done + '/' + total + ' concluído';
+  }
+  finalItems.forEach(i => i.addEventListener('change', () => {
+    i.closest('.cl-item').classList.toggle('done', i.checked);
+    updateProgress();
+  }));
+  updateProgress();
+
+  // all other checklists: just toggle 'done' style
+  document.querySelectorAll('.cl-item input[type=checkbox]').forEach(i => {
+    if(!i.closest('#checklist')){
+      i.addEventListener('change', () => i.closest('.cl-item').classList.toggle('done', i.checked));
+    }
+  });
+
+  // coupon generator
+  const couponName = document.getElementById('couponName');
+  const couponGenBtn = document.getElementById('couponGenBtn');
+  const couponCopyBtn = document.getElementById('couponCopyBtn');
+  const couponResult = document.getElementById('couponResult');
+  const couponResultCode = document.getElementById('couponResultCode');
+  let currentCoupon = '';
+  function normalize(str){
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z]/g,'').toUpperCase();
+  }
+  couponGenBtn.addEventListener('click', () => {
+    const raw = couponName.value.trim();
+    if(!raw){ couponName.focus(); return; }
+    currentCoupon = normalize(raw) + '10';
+    couponResultCode.textContent = currentCoupon;
+    couponResult.style.display = 'block';
+    couponCopyBtn.style.display = 'inline-flex';
+  });
+  couponCopyBtn.addEventListener('click', () => {
+    if(!currentCoupon) return;
+    navigator.clipboard.writeText(currentCoupon).then(() => {
+      couponCopyBtn.textContent = 'Copiado! ✅';
+      setTimeout(() => couponCopyBtn.textContent = 'Copiar meu cupom', 1800);
+    });
+  });
+  couponName.addEventListener('keydown', (e) => { if(e.key === 'Enter') couponGenBtn.click(); });
+
+  // ---------------------------------------------------------------
+  // LOGIN POR E-MAIL — dados da grade oficial (26 pessoas com e-mail cadastrado)
+  // Os e-mails NÃO ficam em texto puro no código: cada registro é indexado
+  // por um hash simples do e-mail normalizado, calculado com a mesma função
+  // tanto aqui quanto no momento do login.
+  // ---------------------------------------------------------------
+  const SPEAKERS = {"f3f410da":{"primeiroNome":"Teste","nomeCompleto":"E-mail de Teste (uso interno)","talks":[{"titulo":"A IA sabe programar. Mas ela sabe o que deveria ser construído?","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"10h","duracao":"45 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"TESTE10"},"5db15cec":{"primeiroNome":"Morgana","nomeCompleto":"Morgana Basso","talks":[{"titulo":"Build. Scale. Breathe. — Performance sustentável para quem vive de tecnologia","trilha":"Salão Comunal","sala":"Auditório (térreo)","inicio":"10h10","duracao":"40 minutos","tipo":"Palestra","tags":""}],"cupom":"MORGANA10"},"51270a85":{"primeiroNome":"Olivar","nomeCompleto":"Olivar Tamele","talks":[{"titulo":"On-Device vs. Cloud: Quando (e como) rodar modelos localmente para reduzir latência e custos","trilha":"Salão Comunal","sala":"Auditório (térreo)","inicio":"11h30","duracao":"45 minutos","tipo":"Palestra","tags":""}],"cupom":"OLIVAR10"},"eb9c97c0":{"primeiroNome":"Gabriel","nomeCompleto":"Gabriel Schmitt Kohlrausch","talks":[{"titulo":"Mentoria para Tech Leads: o que realmente sustenta um time de engenharia de alta performance","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"09h30","duracao":"60 minutos","tipo":"Mentoria","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"},{"titulo":"Pessoas conta histórias. O código conta fatos: como tomar decisões melhores a partir dos sinais da engenharia","trilha":"Salão Comunal","sala":"Auditório (térreo)","inicio":"14h20","duracao":"50 minutos","tipo":"Palestra","tags":""}],"cupom":"GABRIEL10"},"11b31167":{"primeiroNome":"Ricardo","nomeCompleto":"Ricardo da Silva Ogliari","talks":[{"titulo":"Grandes mentes pensam igual","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"09h15","duracao":"45 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"RICARDO10"},"25ee9b9e":{"primeiroNome":"Gabriel","nomeCompleto":"Gabriel Bronzatti Moro","talks":[{"titulo":"Design System + IA: construindo interfaces Flutter com precisão","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"10h","duracao":"45 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"},{"titulo":"Mobile Architecture para a Era da IA","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"16h15","duracao":"40 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"GABRIEL10"},"b55ac556":{"primeiroNome":"Júlia","nomeCompleto":"Júlia Martins (com Laís Silva)","talks":[{"titulo":"O caminho curto que a gente descobriu do jeito longo - IA no desenvolvimento mobile: por onde começar e o que evitar","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"10h45","duracao":"45 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"JULIA10"},"ebe5b0c3":{"primeiroNome":"Laís","nomeCompleto":"Laís Silva (com Júlia Martins)","talks":[{"titulo":"O caminho curto que a gente descobriu do jeito longo - IA no desenvolvimento mobile: por onde começar e o que evitar","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"10h45","duracao":"45 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"LAIS10"},"47227f9d":{"primeiroNome":"Esmael","nomeCompleto":"Esmael Winter","talks":[{"titulo":"Além do console.log: Telemetreia de ponta a ponta com Angular e .Net","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"11h30","duracao":"45 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"ESMAEL10"},"36f2be40":{"primeiroNome":"Luiz","nomeCompleto":"Luiz Rebelatto","talks":[{"titulo":"Deploy sem barreira: Module Federation na prática","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"13h45","duracao":"45 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"LUIZ10"},"f23bebde":{"primeiroNome":"Vilson","nomeCompleto":"Vilson Blanco Dauinheimer","talks":[{"titulo":"O que é e porque algumas pessoas ainda insistem em Flutter","trilha":"Trilha Magia","sala":"Sala 408 (4º andar)","inicio":"14h30","duracao":"40 minutos","tipo":"Palestra","tags":"Mobile, Design, Frontend, Flutter, UX, Arquitetura"}],"cupom":"VILSON10"},"f3c72930":{"primeiroNome":"Michele","nomeCompleto":"Michele dos Santos Scheffel","talks":[{"titulo":"Mulheres na Tecnologia: Construindo uma Trajetória de Impacto na Jornada do Cliente e Liderança de Projetos","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"09h15","duracao":"45 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"MICHELE10"},"fe74e639":{"primeiroNome":"Gabriella","nomeCompleto":"Gabriella Selbach Staniecki","talks":[{"titulo":"A IA sabe programar. Mas ela sabe o que deveria ser construído?","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"10h","duracao":"45 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"GABRIELLA10"},"48f88dae":{"primeiroNome":"Nathalia","nomeCompleto":"Nathalia Karnas","talks":[{"titulo":"Release Management: Muito Além do Deploy","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"10h45","duracao":"45 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"NATHALIA10"},"c0853b15":{"primeiroNome":"Guilherme","nomeCompleto":"Guilherme Soares","talks":[{"titulo":"Escalonando o Impacto: Gestão de Engenharia, Maturidade e Produtividade na Era Agêntica","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"11h30","duracao":"45 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"GUILHERME10"},"aeeae775":{"primeiroNome":"Valéria","nomeCompleto":"Valéria Baptista","talks":[{"titulo":"Quando Engenharia, Produto e Negócio Colidem: O Papel do Líder Técnico","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"13h45","duracao":"35 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"VALERIA10"},"2fbbf470":{"primeiroNome":"Mário","nomeCompleto":"Mário de Araújo Jr","talks":[{"titulo":"Por trás de um emoji","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"16h15","duracao":"40 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"MARIO10"},"975588a8":{"primeiroNome":"Janine","nomeCompleto":"Janine Veigas Farias","talks":[{"titulo":"Entre escolhas e ameaças: o fator humano na cibersegurança","trilha":"Trilha Sentinela","sala":"Sala 409 (4º andar)","inicio":"09h15","duracao":"40 minutos","tipo":"Palestra","tags":"Segurança, IA Confiável, Testes, Qualidade, Governança, Cyber"}],"cupom":"JANINE10"},"5cc5f2cd":{"primeiroNome":"Gabriel","nomeCompleto":"Gabriel Dias","talks":[{"titulo":"Confia, mas confere — o básico de segurança","trilha":"Trilha Sentinela","sala":"Sala 409 (4º andar)","inicio":"11h25","duracao":"45 minutos","tipo":"Lab","tags":"Segurança, IA Confiável, Testes, Qualidade, Governança, Cyber"}],"cupom":"GABRIEL10"},"9d68d11b":{"primeiroNome":"Eduardo","nomeCompleto":"Eduardo Neves de Souza","talks":[{"titulo":"IA confiável não nasce no prompt: qualidade, testes e guardrails em produtos com LLM","trilha":"Trilha Sentinela","sala":"Sala 409 (4º andar)","inicio":"14h45","duracao":"45 minutos","tipo":"Palestra","tags":"Segurança, IA Confiável, Testes, Qualidade, Governança, Cyber"}],"cupom":"EDUARDO10"},"5e448fc2":{"primeiroNome":"Darci","nomeCompleto":"Darci Neto","talks":[{"titulo":"DORA na Era da IA: Medindo Impacto sem Criar Métricas que Enganam","trilha":"Trilha Sentinela","sala":"Sala 409 (4º andar)","inicio":"16h15","duracao":"45 minutos","tipo":"Palestra","tags":"Segurança, IA Confiável, Testes, Qualidade, Governança, Cyber"}],"cupom":"DARCI10"},"2fcb2e8c":{"primeiroNome":"Sabrina","nomeCompleto":"Sabrina Santos da Silva","talks":[{"titulo":"AI Agentcs: SDD - Spec Driven Development no SLDC - Ciclo de desenvolvimento de software e Graph Engennier","trilha":"Trilha Alquimia","sala":"Sala 410 (4º andar)","inicio":"09h15","duracao":"45 minutos","tipo":"Palestra","tags":"IA, Agentes, RAG, Automação, Python, Arquitetura"}],"cupom":"SABRINA10"},"0b9a9550":{"primeiroNome":"Ulises","nomeCompleto":"Ulises Bravo","talks":[{"titulo":"Seu 1º RAG de Bolso: construindo com Clean Code para Agentes","trilha":"Trilha Alquimia","sala":"Sala 410 (4º andar)","inicio":"11h","duracao":"60 minutos","tipo":"Workshop","tags":"IA, Agentes, RAG, Automação, Python, Arquitetura"}],"cupom":"ULISES10"},"4e133d46":{"primeiroNome":"Francielli","nomeCompleto":"Francielli Pinheiro Dias","talks":[{"titulo":"DJ Verbosa Compilando batidas","trilha":"Trilha Alquimia","sala":"Sala 410 (4º andar)","inicio":"13h45","duracao":"45 minutos","tipo":"Workshop","tags":"IA, Agentes, RAG, Automação, Python, Arquitetura"}],"cupom":"FRANCIELLI10"},"bff45f43":{"primeiroNome":"Youssef","nomeCompleto":"Youssef Bougerra","talks":[{"titulo":"Antes de escalar agentes: cinco decisões de arquitetura e governança que evitam a automação errada","trilha":"Trilha Alquimia","sala":"Sala 410 (4º andar)","inicio":"14h30","duracao":"45 minutos","tipo":"Palestra","tags":"IA, Agentes, RAG, Automação, Python, Arquitetura"}],"cupom":"YOUSSEF10"},"d7d22b4b":{"primeiroNome":"Douglas","nomeCompleto":"Douglas Gomes","talks":[{"titulo":"De dias para minutos: automatizando engenharia CAD com Python, APIs e agentes inteligentes","trilha":"Trilha Alquimia","sala":"Sala 410 (4º andar)","inicio":"16h15","duracao":"45 minutos","tipo":"Palestra","tags":"IA, Agentes, RAG, Automação, Python, Arquitetura"}],"cupom":"DOUGLAS10"},"b2e03c7a":{"primeiroNome":"Yasmin","nomeCompleto":"Yasmin Stivelman (com Bibiana Fagundes)","talks":[{"titulo":"Roda de conversa sobre Produto - Comunidade Produteiros","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"10h45","duracao":"50 minutos","tipo":"Roda de conversa","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"}],"cupom":"YASMIN10"},"6b599f90":{"primeiroNome":"Bibiana","nomeCompleto":"Bibiana Fagundes (com Yasmin Stivelman)","talks":[{"titulo":"Roda de conversa sobre Produto - Comunidade Produteiros","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"10h45","duracao":"50 minutos","tipo":"Roda de conversa","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"}],"cupom":"BIBIANA10"},"135fa529":{"primeiroNome":"Priscila","nomeCompleto":"Priscila Rachevsky (roda de conversa)","talks":[{"titulo":"Roda de conversa: carreira em tech, de júnior a sênior+","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"13h45","duracao":"50 minutos","tipo":"Roda de conversa","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"}],"cupom":"PRISCILA10"},"409aac88":{"primeiroNome":"Isadora","nomeCompleto":"Isadora Possebon (roda de conversa)","talks":[{"titulo":"Roda de conversa: carreira em tech, de júnior a sênior+","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"13h45","duracao":"50 minutos","tipo":"Roda de conversa","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"}],"cupom":"ISADORA10"},"b6ead965":{"primeiroNome":"Eduardo","nomeCompleto":"Eduardo Pereira (roda de conversa)","talks":[{"titulo":"Roda de conversa: carreira em tech, de júnior a sênior+","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"13h45","duracao":"50 minutos","tipo":"Roda de conversa","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"}],"cupom":"EDUARDO10"},"86ffca06":{"primeiroNome":"Daniel","nomeCompleto":"Daniel Castro (roda de conversa)","talks":[{"titulo":"Roda de conversa: carreira em tech, de júnior a sênior+","trilha":"Covil","sala":"Sala 401 (4º andar)","inicio":"13h45","duracao":"50 minutos","tipo":"Roda de conversa","tags":"Mentoria, Carreira, Networking, Produto, Liderança, Comunidade"}],"cupom":"DANIEL10"},"226001ba":{"primeiroNome":"Thiago","nomeCompleto":"Thiago Xikota","talks":[{"titulo":"Toda lacuna vira uma decisão do modelo: como fugir do AI slop","trilha":"Trilha Lua Cheia","sala":"Sala 406 (4º andar)","inicio":"15h","duracao":"30 minutos","tipo":"Palestra","tags":"Liderança, Carreira, Produto, Gestão, Pessoas, Impacto"}],"cupom":"THIAGO10"},"2b9ad044":{"primeiroNome":"Mikhael","nomeCompleto":"Mikhael Groschitz","talks":[{"titulo":"Confia, mas confere — o básico de segurança","trilha":"Trilha Sentinela","sala":"Sala 409 (4º andar)","inicio":"11h25","duracao":"45 minutos","tipo":"Lab","tags":"Segurança, IA Confiável, Testes, Qualidade, Governança, Cyber"}],"cupom":"MIKHAEL10"}};
+
+  // E-mails com acesso master (organização) — entram sem estar vinculados a uma palestra específica.
+  const ADMINS = {"fc768a3b":"GDG Porto Alegre","ad38f31a":"GDG Caxias do Sul"};
+
+  function hashEmail(email){
+    const norm = email.trim().toLowerCase();
+    let h = 0x811c9dc5;
+    for (let i = 0; i < norm.length; i++){
+      h ^= norm.charCodeAt(i);
+      h = Math.imul(h, 0x01000193);
+    }
+    return (h >>> 0).toString(16).padStart(8, '0');
+  }
+
+  function durationMinutes(str){
+    const m = str.match(/(\d+)/);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  // Regra oficial: toda "Palestra" tem duração obrigatória de 30 minutos, mesmo que o
+  // intervalo da grade seja maior (a grade inclui um respiro/buffer entre atividades,
+  // que não é tempo de fala da pessoa). Outros formatos (Workshop, Lab, Mentoria,
+  // Roda de conversa) usam o tempo personalizado real, exatamente como está na grade.
+  function effectiveMinutes(talk){
+    if(!talk) return null;
+    if(talk.tipo === 'Palestra' || talk.tipo === 'Palestra patrocinada'){
+      return 30;
+    }
+    return durationMinutes(talk.duracao);
+  }
+
+  function fmtElapsed(mins){
+    // formata minutos decorridos como MM:SS-style relativo (ex: 25 -> "25:00"), sem expor horário real de término
+    const h = Math.floor(mins/60);
+    const m = mins%60;
+    return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+  }
+
+  const heroTitle = document.getElementById('heroTitle');
+  const heroLede = document.getElementById('heroLede');
+  const loginBox = document.getElementById('loginBox');
+  const loggedBox = document.getElementById('loggedBox');
+  const loggedAs = document.getElementById('loggedAs');
+  const loginEmail = document.getElementById('loginEmail');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginMsg = document.getElementById('loginMsg');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const panelHint = document.getElementById('panelHint');
+  const panelStatus = document.getElementById('panelStatus');
+  const panelTalksWrap = document.getElementById('panelTalksWrap');
+  const bigTime = document.getElementById('bigTime');
+  const bigTimeLabel = document.getElementById('bigTimeLabel');
+  const clockAlert = document.getElementById('clockAlert');
+  const clockEnd = document.getElementById('clockEnd');
+  const sidenavEl = document.getElementById('sidenav');
+  const gatedContentEl = document.getElementById('gatedContent');
+  const ctaRowEl = document.getElementById('ctaRow');
+  const HERO_TITLE_DEFAULT = '🧙 Manual da Pessoa Palestrante';
+  const HERO_LEDE_DEFAULT = 'Este manual é exclusivo para quem foi selecionada(o) para palestrar no DevFest Porto Alegre 2026. Entre com o e-mail que você usou na inscrição para acessar.';
+  const STORAGE_KEY = 'devfestpoa26_manual_auth';
+
+  // --- fila de prontidão do Firebase (o módulo carrega de forma assíncrona) ---
+  let fbReady = false;
+  let fbQueue = [];
+  window.addEventListener('firebase-ready', () => {
+    fbReady = true;
+    fbQueue.forEach(fn => fn());
+    fbQueue = [];
+  });
+  function whenFirebaseReady(fn){ if(fbReady) fn(); else fbQueue.push(fn); }
+
+  // --- seções rastreadas como "lidas" ---
+  const SECTION_IDS = ['comece-aqui','sua-participacao','envio','tempo','perguntas','live-coding','seguranca','branding','divulgacao','boas-praticas','empresa','beneficios','acompanhante','cupom','chegada','mapa','gravacao','grade','comunidade','acessibilidade','conduta','plano-b','checklist','faq','contato'];
+  const SECTION_LABELS = {
+    'comece-aqui':'Comece aqui','sua-participacao':'Sua participação','envio':'Envio da apresentação',
+    'tempo':'Tempo de palestra','perguntas':'Perguntas','live-coding':'Live coding','seguranca':'Segurança',
+    'branding':'Branding oficial','divulgacao':'Material de divulgação','boas-praticas':'Boas práticas visuais',
+    'empresa':'Divulgar empresa','beneficios':'Benefícios','acompanhante':'Acompanhante','cupom':'Cupom',
+    'chegada':'Chegada','mapa':'Mapa do evento','gravacao':'Gravações','grade':'Grade/trilha',
+    'comunidade':'Valores','acessibilidade':'Acessibilidade','conduta':'Código de conduta',
+    'plano-b':'Plano B','checklist':'Checklist final','faq':'FAQ','contato':'Contato'
+  };
+
+  let currentHash = null;
+  let sectionsRead = {};
+  let readObserver = null;
+  let saveTimer = null;
+
+  function scheduleSave(){
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      if(!currentHash) return;
+      whenFirebaseReady(() => window.__fb.saveProgress(currentHash, sectionsRead));
+    }, 1500);
+  }
+
+  function updateMyProgressUI(){
+    const total = SECTION_IDS.length;
+    const done = Object.keys(sectionsRead).filter(k => sectionsRead[k]).length;
+    const pct = Math.round((done/total)*100);
+    const fill = document.getElementById('readingProgressFill');
+    const track = document.getElementById('readingProgressTrack');
+    if(fill) fill.style.width = pct + '%';
+    if(track) track.style.display = 'block';
+
+    const block = document.getElementById('myProgressBlock');
+    const barFill = document.getElementById('myProgressBarFill');
+    const pctEl = document.getElementById('myProgressPct');
+    const countEl = document.getElementById('myProgressCount');
+    if(block) block.style.display = 'block';
+    if(barFill) barFill.style.width = pct + '%';
+    if(pctEl) pctEl.textContent = pct + '%';
+    if(countEl) countEl.textContent = done + ' de ' + total + ' seções';
+  }
+
+  function markSectionRead(id){
+    if(sectionsRead[id]) return;
+    sectionsRead[id] = true;
+    updateMyProgressUI();
+    scheduleSave();
+  }
+
+  // --- rastreamento de tempo de sessão (heartbeat) ---
+  let sessionHeartbeat = null;
+  let sessionUnflushedSeconds = 0;
+  const HEARTBEAT_SECONDS = 20;
+
+  function flushSessionTime(){
+    if(!currentHash || sessionUnflushedSeconds <= 0) return;
+    const toSend = sessionUnflushedSeconds;
+    sessionUnflushedSeconds = 0;
+    whenFirebaseReady(() => window.__fb.addSessionTime(currentHash, toSend));
+  }
+
+  function startSessionHeartbeat(){
+    stopSessionHeartbeat();
+    sessionHeartbeat = setInterval(() => {
+      if(document.visibilityState === 'visible' && currentHash){
+        sessionUnflushedSeconds += HEARTBEAT_SECONDS;
+        flushSessionTime();
+      }
+    }, HEARTBEAT_SECONDS * 1000);
+    window.addEventListener('beforeunload', flushSessionTime);
+    document.addEventListener('visibilitychange', () => {
+      if(document.visibilityState === 'hidden') flushSessionTime();
+    });
+  }
+
+  function stopSessionHeartbeat(){
+    if(sessionHeartbeat){ clearInterval(sessionHeartbeat); sessionHeartbeat = null; }
+    flushSessionTime();
+  }
+
+  function startReadTracking(hash, previousSections){
+    currentHash = hash;
+    sectionsRead = previousSections && typeof previousSections === 'object' ? {...previousSections} : {};
+    updateMyProgressUI();
+    startSessionHeartbeat();
+
+    if(readObserver) readObserver.disconnect();
+    const timers = {};
+    readObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.id;
+        if(entry.isIntersecting && entry.intersectionRatio >= 0.5){
+          if(!timers[id]){
+            timers[id] = setTimeout(() => {
+              markSectionRead(id);
+              readObserver.unobserve(entry.target);
+            }, 1500);
+          }
+        } else if(timers[id]){
+          clearTimeout(timers[id]);
+          delete timers[id];
+        }
+      });
+    }, { threshold: [0.5] });
+
+    SECTION_IDS.forEach(id => {
+      if(sectionsRead[id]) return; // já lida, não precisa observar de novo
+      const el = document.getElementById(id);
+      if(el) readObserver.observe(el);
+    });
+  }
+
+  function stopReadTracking(){
+    if(readObserver){ readObserver.disconnect(); readObserver = null; }
+    stopSessionHeartbeat();
+    currentHash = null;
+    sectionsRead = {};
+    const track = document.getElementById('readingProgressTrack');
+    const block = document.getElementById('myProgressBlock');
+    if(track) track.style.display = 'none';
+    if(block) block.style.display = 'none';
+  }
+
+  // localStorage com fallback: se falhar (ex: dentro de um preview sandboxed),
+  // o login simplesmente não persiste entre recarregamentos, mas continua funcionando na sessão atual.
+  function safeStorageGet(key){
+    try { return window.localStorage.getItem(key); } catch(e){ return null; }
+  }
+  function safeStorageSet(key, val){
+    try { window.localStorage.setItem(key, val); } catch(e){ /* silencioso */ }
+  }
+  function safeStorageRemove(key){
+    try { window.localStorage.removeItem(key); } catch(e){ /* silencioso */ }
+  }
+
+  function renderTalkBlock(talk){
+    const mins = effectiveMinutes(talk);
+    const duracaoLabel = (talk.tipo === 'Palestra' || talk.tipo === 'Palestra patrocinada') && mins
+      ? mins + ' minutos'
+      : talk.duracao;
+    return '<div class="panel-rows" data-talk-block style="margin-top:14px;">' +
+      '<div class="panel-row"><div class="k">🎤 Atividade</div><div class="v">' + talk.titulo + '</div></div>' +
+      '<div class="panel-row"><div class="k">🧙 Trilha</div><div class="v">' + talk.trilha + '</div></div>' +
+      '<div class="panel-row"><div class="k">📍 Sala</div><div class="v">' + (talk.sala || 'Em breve') + '</div></div>' +
+      '<div class="panel-row"><div class="k">⏰ Horário de início</div><div class="v">' + talk.inicio + '</div></div>' +
+      '<div class="panel-row"><div class="k">⏱️ Duração</div><div class="v">' + duracaoLabel + '</div></div>' +
+      '<div class="panel-row"><div class="k">🎬 Formato</div><div class="v">' + talk.tipo + '</div></div>' +
+      (talk.tags ? '<div class="panel-row" style="grid-column:1/-1;"><div class="k">🏷️ Tags</div><div class="v" style="font-size:13px;">' + talk.tags + '</div></div>' : '') +
+    '</div>';
+  }
+
+  function revealManual(){
+    sidenavEl.style.display = 'block';
+    gatedContentEl.style.display = 'block';
+    ctaRowEl.style.display = 'flex';
+    document.getElementById('menuToggle').style.display = '';
+    const journey = document.getElementById('journeyIndicator');
+    if(journey) journey.style.display = 'flex';
+  }
+
+  function lockManual(){
+    sidenavEl.style.display = 'none';
+    gatedContentEl.style.display = 'none';
+    ctaRowEl.style.display = 'none';
+    document.getElementById('menuToggle').style.display = 'none';
+    const journey = document.getElementById('journeyIndicator');
+    if(journey) journey.style.display = 'none';
+  }
+
+  function applySpeaker(data, hash){
+    // hero greeting
+    heroTitle.textContent = '👋 Olá, ' + data.primeiroNome + '!';
+    heroLede.textContent = 'Esse é o seu manual da pessoa palestrante do DevFest Porto Alegre 2026.';
+
+    // logged state
+    loginBox.style.display = 'none';
+    loggedBox.style.display = 'flex';
+    loggedAs.textContent = '🟢 Logada(o) como ' + data.nomeCompleto;
+
+    // desbloqueia o manual inteiro
+    revealManual();
+
+    // panel
+    panelHint.textContent = data.talks.length > 1 ? 'Você tem ' + data.talks.length + ' atividades na grade' : 'Dados carregados da grade oficial';
+    panelHint.classList.remove('pending');
+    panelHint.classList.add('ok');
+    panelTalksWrap.innerHTML = data.talks.map(renderTalkBlock).join('');
+
+    // tempo section — usa a primeira atividade como referência (tempo relativo, sem expor horário de término)
+    // regra oficial: Palestra = 30min fixo; outros formatos = tempo personalizado real da grade
+    const mins = effectiveMinutes(data.talks[0]);
+    if(mins){
+      bigTime.childNodes[0].textContent = mins;
+      bigTimeLabel.textContent = 'minutos na sua atividade';
+      clockAlert.textContent = fmtElapsed(Math.max(mins - 5, 0));
+      clockEnd.textContent = fmtElapsed(mins);
+    }
+
+    // cupom oficial, fixo por e-mail (definido no cadastro da grade)
+    if(data.cupom){
+      currentCoupon = data.cupom;
+      const couponResultCode = document.getElementById('couponResultCode');
+      const couponResult = document.getElementById('couponResult');
+      const couponCopyBtnEl = document.getElementById('couponCopyBtn');
+      if(couponResultCode) couponResultCode.textContent = data.cupom;
+      if(couponResult) couponResult.style.display = 'block';
+      if(couponCopyBtnEl) couponCopyBtnEl.style.display = 'inline-flex';
+    }
+
+    // guarda o login (só o hash, nunca o e-mail em texto puro) para a próxima visita
+    if(hash) safeStorageSet(STORAGE_KEY, hash);
+
+    // carrega progresso salvo (se existir) e começa a rastrear a leitura
+    whenFirebaseReady(() => {
+      window.__fb.recordLogin(hash);
+      window.__fb.loadProgress(hash).then(saved => {
+        startReadTracking(hash, saved && saved.sections);
+      });
+    });
+  }
+
+  function applyAdmin(label, hash){
+    heroTitle.textContent = '🛡️ Modo organização';
+    heroLede.textContent = 'Acesso master de ' + label + ' — você está vendo o manual completo, sem estar vinculado a uma palestra específica.';
+
+    loginBox.style.display = 'none';
+    loggedBox.style.display = 'flex';
+    loggedAs.textContent = '🟣 Logada(o) como admin — ' + label;
+
+    revealManual();
+
+    panelHint.textContent = 'Modo administrador — este painel só mostra dados quando o login é de uma pessoa palestrante';
+    panelHint.classList.remove('ok');
+    panelHint.classList.add('pending');
+    // painel e tempo ficam no estado padrão "Em breve" (já é o default do HTML, nada a preencher)
+    // admins não têm progresso de leitura rastreado (não são pessoas palestrantes)
+
+    if(hash) safeStorageSet(STORAGE_KEY, hash);
+  }
+
+  function doLogin(){
+    const raw = loginEmail.value.trim();
+    if(!raw){ loginMsg.textContent = 'Digite o e-mail que você usou na inscrição.'; loginMsg.className = 'login-msg error'; return; }
+    const h = hashEmail(raw);
+    if(SPEAKERS[h]){
+      loginMsg.textContent = '';
+      applySpeaker(SPEAKERS[h], h);
+    } else if(ADMINS[h]){
+      loginMsg.textContent = '';
+      applyAdmin(ADMINS[h], h);
+    } else {
+      loginMsg.textContent = 'Não encontramos esse e-mail na grade de palestrantes selecionadas(os). Confira se digitou certo ou fale com a organização.';
+      loginMsg.className = 'login-msg error';
+    }
+  }
+
+  loginBtn.addEventListener('click', doLogin);
+  loginEmail.addEventListener('keydown', (e) => { if(e.key === 'Enter') doLogin(); });
+  logoutBtn.addEventListener('click', () => {
+    loggedBox.style.display = 'none';
+    loginBox.style.display = 'block';
+    loginEmail.value = '';
+    heroTitle.textContent = HERO_TITLE_DEFAULT;
+    heroLede.textContent = HERO_LEDE_DEFAULT;
+    panelHint.textContent = 'Faça login lá em cima para ver seus dados aqui';
+    panelHint.classList.add('pending');
+    panelHint.classList.remove('ok');
+    panelTalksWrap.innerHTML = '<div class="panel-rows" data-talk-block>' +
+      '<div class="panel-row"><div class="k">🎤 Palestra</div><div class="v">Em breve</div></div>' +
+      '<div class="panel-row"><div class="k">🧙 Trilha</div><div class="v">Em breve</div></div>' +
+      '<div class="panel-row"><div class="k">📍 Sala</div><div class="v">Em breve</div></div>' +
+      '<div class="panel-row"><div class="k">⏰ Horário</div><div class="v">Em breve</div></div>' +
+      '<div class="panel-row"><div class="k">⏱️ Duração</div><div class="v">Em breve</div></div>' +
+      '<div class="panel-row"><div class="k">🎬 Formato</div><div class="v">Em breve</div></div>' +
+    '</div>';
+    bigTime.childNodes[0].textContent = '--';
+    bigTimeLabel.textContent = 'faça login para ver sua duração';
+    clockAlert.textContent = '--:--';
+    clockEnd.textContent = '--:--';
+    currentCoupon = '';
+    document.getElementById('couponResult').style.display = 'none';
+    document.getElementById('couponCopyBtn').style.display = 'none';
+    safeStorageRemove(STORAGE_KEY);
+    stopReadTracking();
+    lockManual();
+    window.scrollTo({top:0, behavior:'instant'});
+  });
+
+  // trava o manual por padrão e tenta um login automático se já houver um acesso salvo neste navegador
+  lockManual();
+  (function tryAutoLogin(){
+    const savedHash = safeStorageGet(STORAGE_KEY);
+    if(!savedHash) return;
+    if(SPEAKERS[savedHash]){
+      applySpeaker(SPEAKERS[savedHash], savedHash);
+    } else if(ADMINS[savedHash]){
+      applyAdmin(ADMINS[savedHash], savedHash);
+    }
+  })();
+
+  // ---------------------------------------------------------------
+  // PAINEL ADMIN — login real via Firebase Auth (e-mail + senha)
+  // ---------------------------------------------------------------
+  const adminEmailInput = document.getElementById('adminEmail');
+  const adminPasswordInput = document.getElementById('adminPassword');
+  const adminSignInBtn = document.getElementById('adminSignInBtn');
+  const adminLoginMsg = document.getElementById('adminLoginMsg');
+  const adminLoginArea = document.getElementById('adminLoginArea');
+  const adminDashboardArea = document.getElementById('adminDashboardArea');
+  const adminWhoAmI = document.getElementById('adminWhoAmI');
+  const adminSignOutBtn = document.getElementById('adminSignOutBtn');
+  const adminRefreshBtn = document.getElementById('adminRefreshBtn');
+  const adminTableWrap = document.getElementById('adminTableWrap');
+
+  function fmtFirestoreDate(ts){
+    if(!ts) return '—';
+    try {
+      const d = typeof ts.toDate === 'function' ? ts.toDate() : new Date(ts);
+      return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    } catch(e){ return '—'; }
+  }
+
+  function fmtSessionTime(totalSeconds){
+    if(!totalSeconds) return '—';
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.round((totalSeconds % 3600) / 60);
+    if(h > 0) return h + 'h ' + m + 'min';
+    if(m > 0) return m + 'min';
+    return '<1min';
+  }
+
+  function renderAdminTable(rows){
+    if(!rows.length){
+      adminTableWrap.innerHTML = '<p style="font-size:13.5px;">Ainda ninguém acessou o manual.</p>';
+      return;
+    }
+    // tenta enriquecer com nome real via SPEAKERS (o doc no Firestore só guarda o hash, nunca o e-mail)
+    const enriched = rows.map(r => {
+      const speaker = SPEAKERS[r.id];
+      const nome = speaker ? speaker.nomeCompleto : (ADMINS[r.id] ? '(admin) ' + ADMINS[r.id] : 'Desconhecido (' + r.id + ')');
+      const sections = r.sections || {};
+      const done = SECTION_IDS.filter(id => sections[id]).length;
+      const pct = Math.round((done / SECTION_IDS.length) * 100);
+      const pendentes = SECTION_IDS.filter(id => !sections[id]).map(id => SECTION_LABELS[id] || id);
+      return {
+        nome, pct, done, total: SECTION_IDS.length, pendentes,
+        firstLogin: fmtFirestoreDate(r.firstLogin),
+        lastLogin: fmtFirestoreDate(r.lastLogin),
+        sessionTime: fmtSessionTime(r.totalSeconds)
+      };
+    }).sort((a,b) => b.pct - a.pct);
+
+    let html = '<table class="admin-table"><thead><tr><th>Nome</th><th>Progresso</th><th>1º login</th><th>Último login</th><th>Tempo de sessão</th><th>Seções pendentes</th></tr></thead><tbody>';
+    enriched.forEach(r => {
+      html += '<tr>' +
+        '<td>' + r.nome + '</td>' +
+        '<td><span class="admin-bar-track"><span class="admin-bar-fill" style="width:' + r.pct + '%"></span></span>' + r.pct + '% (' + r.done + '/' + r.total + ')</td>' +
+        '<td style="font-size:12.5px; white-space:nowrap;">' + r.firstLogin + '</td>' +
+        '<td style="font-size:12.5px; white-space:nowrap;">' + r.lastLogin + '</td>' +
+        '<td style="font-size:12.5px; white-space:nowrap;">' + r.sessionTime + '</td>' +
+        '<td style="font-size:12.5px; color:var(--ink-faint); max-width:300px;">' + (r.pendentes.length ? r.pendentes.join(', ') : '— tudo lido 🎉') + '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table>';
+    adminTableWrap.innerHTML = html;
+  }
+
+  function loadAdminTable(){
+    adminTableWrap.innerHTML = '<p style="font-size:13.5px;">Carregando dados…</p>';
+    whenFirebaseReady(() => {
+      window.__fb.adminGetAll().then(renderAdminTable).catch(err => {
+        adminTableWrap.innerHTML = '<p style="font-size:13.5px; color:var(--danger);">Erro ao carregar: ' + err.message + '</p>';
+      });
+    });
+  }
+
+  if(adminSignInBtn){
+    adminSignInBtn.addEventListener('click', () => {
+      const email = adminEmailInput.value.trim();
+      const pass = adminPasswordInput.value;
+      if(!email || !pass){ adminLoginMsg.textContent = 'Preencha e-mail e senha.'; adminLoginMsg.style.color = 'var(--danger)'; return; }
+      adminLoginMsg.textContent = 'Entrando…';
+      adminLoginMsg.style.color = 'var(--ink-muted)';
+      whenFirebaseReady(() => {
+        window.__fb.adminSignIn(email, pass).catch(err => {
+          adminLoginMsg.textContent = 'Não foi possível entrar: ' + err.message;
+          adminLoginMsg.style.color = 'var(--danger)';
+        });
+      });
+    });
+  }
+
+  if(adminSignOutBtn){
+    adminSignOutBtn.addEventListener('click', () => {
+      whenFirebaseReady(() => window.__fb.adminSignOut && window.__fb.adminSignOut());
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // INGRESSOS NÃO RETIRADOS — lista fixa para cobrança (admin)
+  // Números de WhatsApp: preencher manualmente aqui conforme forem enviados.
+  // ---------------------------------------------------------------
+  const TICKETS_PENDING = [
+    { nome: "Bibiana Fagundes", email: "bibafd@hotmail.com", phone: null },
+    { nome: "Vilson Blanco Dauinheimer (Bwolf)", email: "bwolfnoob@gmail.com", phone: "5554999690166" },
+    { nome: "Gabul", email: "contato@gabul.dev", phone: null },
+    { nome: "Daniel Castro", email: "danielcastro.rs@gmail.com", phone: null },
+    { nome: "Douglas Gomes", email: "douglas.lentz87@gmail.com", phone: "5554996745135" },
+    { nome: "Gabriel Schmitt Kohlrausch", email: "gabriel@elemarjr.com", phone: "5551999935455" },
+    { nome: "Gabriel Bronzatti Moro", email: "gabrielbronzattimoro.es@gmail.com", phone: "5551999329273" },
+    { nome: "Gabriella Selbach Staniecki", email: "gabriellaselbach@gmail.com", phone: "5553984753016" },
+    { nome: "Luiz Rebelatto", email: "lbrebelatto@gmail.com", phone: "5551993808123" },
+    { nome: "Olivar Tamele", email: "mocolivarbaloi@gmail.com", phone: "5562982075715" },
+    { nome: "Mário de Araújo Jr", email: "oiram.araujo@gmail.com", phone: "5551989192856" },
+    { nome: "Rafael Nunes", email: "rafael.nunes@dentsu.com", phone: null },
+    { nome: "Ricardo da Silva Ogliari", email: "rogliariping@gmail.com", phone: "5554981212042" },
+    { nome: "Ulises Bravo", email: "ulises.bravo@iilex.com.br", phone: "5551982329460" },
+    { nome: "Vitor Britis", email: "vittor.santos@appmax.com.br", phone: null }
+  ];
+
+  const TICKET_MESSAGE_TEMPLATE = (nome) => 'Oi, ' + nome + '! \n' +
+    'Estou entrando em contato porque identificamos que o seu ingresso de palestrante ainda não foi retirado, e o prazo que havíamos estabelecido para essa etapa já foi encerrado.\n\n' +
+    'Antes de seguirmos com a organização, precisamos confirmar: *você continua como palestrante do DevFest Porto Alegre 2026?*\n\n' +
+    'Caso sim, pedimos que faça a retirada do ingresso o quanto antes, nesse link: https://www.sympla.com.br/evento/devfest-porto-alegre-2026/3511958?token=b9d6ff4e35ab1880a8817801b7103ed1. \n' +
+    '*Essa etapa é obrigatória e está diretamente ligada ao nosso credenciamento, produção do crachá e organização da logística do evento. Como o prazo já expirou, precisamos regularizar essa pendência com prioridade para evitar problemas no seu acesso e no credenciamento no evento, até o dia 25/09.*\n\n' +
+    'Se você ainda vai participar como palestrante e continuar com alguma dificuldade para retirar o ingresso, me avise por aqui para que possamos resolver.\n' +
+    'Se houve alguma mudança e você não poderá mais participar, também pedimos que nos sinalize para atualizarmos a programação e a organização do evento.\n\n' +
+    'Obrigada pela atenção e pela parceria!';
+
+  const adminTicketsLocked = document.getElementById('adminTicketsLocked');
+  const adminTicketsArea = document.getElementById('adminTicketsArea');
+  const ticketsTableWrap = document.getElementById('ticketsTableWrap');
+  const copyMsgBtn = document.getElementById('copyMsgBtn');
+
+  const EMAIL_SUBJECT = 'Ingresso de palestrante pendente — DevFest Porto Alegre 2026';
+
+  function stripWhatsappMarkdown(text){
+    return text.replace(/\*/g, '');
+  }
+
+  function renderTicketsTable(){
+    let html = '<table class="admin-table"><thead><tr><th>Nome</th><th>E-mail</th><th>Ação</th></tr></thead><tbody>';
+    TICKETS_PENDING.forEach(p => {
+      const msg = TICKET_MESSAGE_TEMPLATE(p.nome.split(' ')[0]);
+      let acao;
+      if(p.phone){
+        const waLink = 'https://wa.me/' + p.phone + '?text=' + encodeURIComponent(msg);
+        acao = '<a href="' + waLink + '" target="_blank" rel="noopener" class="btn btn-primary btn-small">💬 WhatsApp</a>';
+      } else {
+        const emailBody = stripWhatsappMarkdown(msg);
+        const gmailLink = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(p.email) + '&su=' + encodeURIComponent(EMAIL_SUBJECT) + '&body=' + encodeURIComponent(emailBody);
+        acao = '<a href="' + gmailLink + '" target="_blank" rel="noopener" class="btn btn-ghost btn-small">📧 Enviar e-mail (Gmail)</a> <span class="badge pending" style="margin-left:6px;">sem número</span>';
+      }
+      html += '<tr>' +
+        '<td>' + p.nome + '</td>' +
+        '<td style="font-size:12.5px;">' + p.email + '</td>' +
+        '<td>' + acao + '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table>';
+    ticketsTableWrap.innerHTML = html;
+  }
+
+  if(copyMsgBtn){
+    copyMsgBtn.addEventListener('click', () => {
+      const msg = TICKET_MESSAGE_TEMPLATE('[NOME]');
+      navigator.clipboard.writeText(msg).then(() => {
+        copyMsgBtn.textContent = 'Copiado! ✅';
+        setTimeout(() => copyMsgBtn.textContent = '📋 Copiar mensagem padrão', 1800);
+      });
+    });
+  }
+
+  if(adminRefreshBtn){
+    adminRefreshBtn.addEventListener('click', loadAdminTable);
+  }
+
+  whenFirebaseReady(() => {
+    window.__fb.onAdminAuthChange((isAdmin, user) => {
+      if(isAdmin){
+        adminLoginArea.style.display = 'none';
+        adminDashboardArea.style.display = 'block';
+        adminWhoAmI.textContent = '🟢 ' + user.email;
+        loadAdminTable();
+
+        adminTicketsLocked.style.display = 'none';
+        adminTicketsArea.style.display = 'block';
+        renderTicketsTable();
+      } else {
+        adminLoginArea.style.display = 'block';
+        adminDashboardArea.style.display = 'none';
+        adminLoginMsg.textContent = '';
+
+        adminTicketsLocked.style.display = 'block';
+        adminTicketsArea.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
